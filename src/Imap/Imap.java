@@ -3,10 +3,16 @@ package Imap;
 import javax.activation.DataHandler;
 import javax.mail.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
-
+/**
+ * Created by Kamil on 08.09.2017.
+ */
 public class Imap
 {
+    private List<MessageImap> list;
     private String replace(String word){
         String plain = word.replaceAll("\\<.*?\\>", " ");
         int end = plain.lastIndexOf("}");
@@ -21,13 +27,14 @@ public class Imap
         return plain;
     }
 
-    private void printMessage(Message message) throws MessagingException, IOException {
-        System.out.println("---------------------------------");
-        System.out.println("Subject: " + message.getSubject());
-        System.out.println("From: " + message.getFrom()[0]);
-        System.out.println("Body: ");
+    private MessageImap init (Message message) throws MessagingException, IOException {
+        MessageImap messageImap = new MessageImap();
+        messageImap.setSubject(message.getSubject());
+        messageImap.setFrom(message.getFrom()[0].toString());
+        List<String> attachements = new ArrayList<>();
         Multipart multipart;
         String temp = "";
+        StringBuilder builder = new StringBuilder();
         try {
             multipart = (Multipart) message.getContent();
             int count = multipart.getCount();
@@ -35,25 +42,26 @@ public class Imap
                 BodyPart bodyPart = multipart.getBodyPart(k);
                 String disposition = bodyPart.getDisposition();
                 if (disposition != null && (disposition.equalsIgnoreCase("ATTACHMENT"))) {
-                    System.out.println("Mail have some attachment");
-
                     DataHandler handler = bodyPart.getDataHandler();
-                    System.out.println("file name : " + handler.getName());
+                    attachements.add(handler.getName());
                 }
                 else {
                     String plain = replace(bodyPart.getContent().toString());
                     if(!temp.equals(plain)){
-                        System.out.println(plain);
                         temp = plain;
+                        builder.append(plain);
                     }
                 }
             }
         } catch (ClassCastException e){
             String plain = replace(message.getContent().toString());
-            System.out.println(plain);
+            builder.append(plain);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        messageImap.setBody(builder.toString());
+        messageImap.setAttachements(attachements);
+        return messageImap;
     }
 
     private void check(String host, String storeType, String user,String password)
@@ -72,13 +80,12 @@ public class Imap
             emailFolder.open(Folder.READ_ONLY);
 
             Message[] messages = emailFolder.getMessages();
-            System.out.println("messages.length---" + messages.length);
 
 
             for (int j = 0, n = messages.length; j < n; j++) {
                 int i = messages.length-j-1;
                 Message message = messages[i];
-                printMessage(message);
+                list.add(init(message));
             }
 
             emailFolder.close(false);
@@ -89,11 +96,20 @@ public class Imap
         }
     }
 
-    public void start(){
-        String host = "imap.gmail.com";
+    public List<MessageImap> getList() {
+        return list;
+    }
+
+    public void setList(List<MessageImap> list) {
+        this.list = list;
+    }
+
+    public void start(String host, String mailStoreType, String username, String password){
+        list = new ArrayList<>();
+        /*String host = "imap.gmail.com";
         String mailStoreType = "imaps";
         String username = "kmlszelg98@gmail.com";
-        String password ="kmlszelg";
+        String password ="kmlszelg";*/
 
         check(host, mailStoreType, username, password);
     }
