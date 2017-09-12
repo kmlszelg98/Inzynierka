@@ -19,6 +19,17 @@
             <artifactId>JTattoo</artifactId>
             <version>1.6.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.8.11.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.samczsun</groupId>
+            <artifactId>skype4j</artifactId>
+            <version>0.1.5</version>
+        </dependency>
     </dependencies>
     
 </project>
