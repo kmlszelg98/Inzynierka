@@ -1,5 +1,6 @@
 package Model;
 
+import Controller.MailController;
 import Imap.MessageImap;
 import Imap.Imap;
 
@@ -19,7 +20,7 @@ public class InboxModel {
         String mailStoreType = "imaps";
         String username = "kmlszelg98@gmail.com";
         String pass ="kmlszelg";
-        Imap imap = new Imap();
+        Imap imap = MailController.getImap();
         imap.start(host,mailStoreType,username,pass);
         list = imap.getList();
     }

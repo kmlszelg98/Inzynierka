@@ -93,7 +93,7 @@ public class LoginView {
 
     public void updateModel(){
         model.setName(nameArea.getText());
-        model.setPassword(passArea.getText());
+        model.setPassword(String.valueOf(passArea.getPassword()));
     }
 
     public LoginModel getModel(){
