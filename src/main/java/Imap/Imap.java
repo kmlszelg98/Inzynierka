@@ -1,5 +1,7 @@
 package Imap;
 
+import Threads.ImapInitThread;
+
 import javax.activation.DataHandler;
 import javax.mail.*;
 import java.io.IOException;
@@ -25,9 +27,10 @@ public class Imap
         plain = plain.replaceAll("&nbsp;"," ");
         plain = plain.replaceAll("\\s{2,}", " ").trim();
         return plain;
+
     }
 
-    private MessageImap init (Message message) throws MessagingException, IOException {
+    public MessageImap init (Message message) throws MessagingException, IOException {
         MessageImap messageImap = new MessageImap();
         messageImap.setSubject(message.getSubject());
         messageImap.setFrom(message.getFrom()[0].toString());
@@ -66,6 +69,7 @@ public class Imap
 
     private void check(String host, String storeType, String user,String password)
     {
+
         try {
             Properties properties = new Properties();
             properties.put("mail.imaps.host", host);
@@ -76,21 +80,28 @@ public class Imap
             Store store = emailSession.getStore("imaps");
             store.connect(host, user, password);
 
-            Folder emailFolder = store.getFolder("INBOX");
+            Folder emailFolder = store.getFolder("INBOX");//[Gmail]/Wszystkie?Wysłane - co z innymi przegladarkami
             emailFolder.open(Folder.READ_ONLY);
 
             Message[] messages = emailFolder.getMessages();
+            System.out.println("Start");
+            int licznik = 10;
+            ImapInitThread[] imapInitThread = new ImapInitThread[licznik];
+            Thread[] threads = new Thread[licznik];
 
-
-            for (int j = 0, n = messages.length; j < n; j++) {
-                int i = messages.length-j-1;
-                Message message = messages[i];
-                list.add(init(message));
+            for(int i=0;i<licznik;i++){
+                imapInitThread[i] = new ImapInitThread(i,messages[messages.length-1-i]);
+                threads[i] = new Thread(imapInitThread[i]);
             }
 
-            emailFolder.close(false);
-            store.close();
+            for (int j = 0; j < licznik; j++) {
+                int i = licznik-j-1;
+                threads[i].start();
+            }
 
+            //emailFolder.close(false);
+            //store.close();
+            System.out.println("Finish");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -106,10 +117,10 @@ public class Imap
 
     public void start(String host, String mailStoreType, String username, String password){
         list = new ArrayList<MessageImap>();
-        /*String host = "imap.gmail.com";
-        String mailStoreType = "imaps";
-        String username = "kmlszelg98@gmail.com";
-        String password ="kmlszelg";*/
+        host = "imap.gmail.com";
+        mailStoreType = "imaps";
+        username = "szelagkamil0@gmail.com";
+        password ="kmlszelg";
 
         check(host, mailStoreType, username, password);
     }

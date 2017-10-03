@@ -37,7 +37,7 @@ public class LoginController {
                 view.updateModel();
                 view.getMainFrame().dispose();
                 MailView mailView = new MailView();
-                MailController mailController = new MailController(mailView);
+                new MailController(mailView);
             }
         });
 
@@ -48,7 +48,7 @@ public class LoginController {
                 view.getMainFrame().dispose();
                 RegisterModel model = new RegisterModel();
                 RegisterView view = new RegisterView(model);
-                RegisterController controller = new RegisterController(model,view);
+                new RegisterController(model,view);
                 System.out.println("Rejestracja");
 
             }

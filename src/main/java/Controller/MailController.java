@@ -4,6 +4,7 @@ import Helpers.WindowHelper;
 import Imap.Imap;
 import Model.LoginModel;
 import Skype.Skype;
+import View.ImapView;
 import View.LoginView;
 import View.MailView;
 
@@ -18,6 +19,7 @@ public class MailController {
     private MailView view;
     private static Imap imap;
     private static Skype skype;
+    private ImapController imapController;
 
     static {
         //imap = new Imap();
@@ -27,6 +29,7 @@ public class MailController {
 
     public MailController(MailView view) {
         this.view = view;
+
         setListeners();
     }
 
@@ -44,7 +47,9 @@ public class MailController {
         view.getImapButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-
+                view.getFrame().dispose();
+                ImapView view = new ImapView();
+                new ImapController(view);
             }
         });
 
@@ -61,9 +66,13 @@ public class MailController {
                 view.getFrame().dispose();
                 LoginModel model = new LoginModel();
                 LoginView view = new LoginView(model);
-                LoginController controller = new LoginController(model,view);
+                new LoginController(model,view);
             }
         });
+    }
+
+    public void setImapController(ImapController imapController) {
+        this.imapController = imapController;
     }
 
     public static Imap getImap() {

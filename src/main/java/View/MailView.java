@@ -53,7 +53,7 @@ public class MailView {
         frame.add(msgField);
 
         frame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
-        frame.setTitle("LOGIN FORM");
+        frame.setTitle("Aplikacja");
 
         frame.setLocation(0,0);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

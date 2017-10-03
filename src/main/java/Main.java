@@ -28,9 +28,12 @@ public class Main {
     public static void main(String[] args) {
 
 
-        LoginModel model = new LoginModel();
+        /*LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
-        LoginController controller = new LoginController(model,view);
+        new LoginController(model,view);*/
+        Imap.Imap imap = new Imap.Imap();
+        imap.start("","","","");
+
 
     }
 }
