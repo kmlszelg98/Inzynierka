@@ -1,6 +1,7 @@
 package Controller;
 
 import Helpers.WindowHelper;
+import Imap.Imap;
 import Model.LoginModel;
 import Model.RegisterModel;
 import View.LoginView;
@@ -37,6 +38,8 @@ public class LoginController {
                 view.updateModel();
                 view.getMainFrame().dispose();
                 MailView mailView = new MailView();
+                Imap imap = new Imap();
+                imap.start("imap.gmail.com","imaps","szelagkamil0@gmail.com","kmlszelg");
                 new MailController(mailView);
             }
         });

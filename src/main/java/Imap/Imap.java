@@ -1,12 +1,11 @@
 package Imap;
 
-import Threads.ImapInitThread;
+import Threads.ImapMessageThread;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 /**
@@ -14,7 +13,10 @@ import java.util.Properties;
  */
 public class Imap
 {
+    private static Message[] messages;
     private List<MessageImap> list;
+    private static int id;
+
     private String replace(String word){
         String plain = word.replaceAll("\\<.*?\\>", " ");
         int end = plain.lastIndexOf("}");
@@ -83,44 +85,74 @@ public class Imap
             Folder emailFolder = store.getFolder("INBOX");//[Gmail]/Wszystkie?Wysłane - co z innymi przegladarkami
             emailFolder.open(Folder.READ_ONLY);
 
-            Message[] messages = emailFolder.getMessages();
-            System.out.println("Start");
-            int licznik = 10;
-            ImapInitThread[] imapInitThread = new ImapInitThread[licznik];
-            Thread[] threads = new Thread[licznik];
-
-            for(int i=0;i<licznik;i++){
-                imapInitThread[i] = new ImapInitThread(i,messages[messages.length-1-i]);
-                threads[i] = new Thread(imapInitThread[i]);
-            }
-
-            for (int j = 0; j < licznik; j++) {
-                int i = licznik-j-1;
-                threads[i].start();
-            }
+            messages = emailFolder.getMessages();
 
             //emailFolder.close(false);
             //store.close();
-            System.out.println("Finish");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static MessageImap getFirstMessage(){
+        System.out.println("Start :)");
+        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-1]);
+        imapThread.start();
+        try {
+            imapThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        id = id+1;
+        System.out.println("End1");
+        return imapThread.getMessage();
+    }
+
+
+    public static void getMessages(){
+        System.out.println("Start1");
+        int counter = 2;
+        ImapMessageThread[] imapMessageThread = new ImapMessageThread[counter];
+
+        if(id>1) {
+            imapMessageThread[0] = new ImapMessageThread(messages[messages.length - 1 - id]);
+            imapMessageThread[1] = new ImapMessageThread(messages[messages.length + 1 - id]);
+
+
+            for (int j = 0; j < counter; j++) {
+                imapMessageThread[j].start();
+            }
+
+            for (int i = 0; i < counter; i++) {
+                try {
+                    imapMessageThread[i].join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            imapMessageThread[0] = new ImapMessageThread(messages[messages.length - 2]);
+            imapMessageThread[0].start();
+            try {
+                imapMessageThread[0].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("End2");
     }
 
     public List<MessageImap> getList() {
         return list;
     }
 
-    public void setList(List<MessageImap> list) {
-        this.list = list;
-    }
-
     public void start(String host, String mailStoreType, String username, String password){
-        list = new ArrayList<MessageImap>();
-        host = "imap.gmail.com";
+
+        /*host = "imap.gmail.com";
         mailStoreType = "imaps";
         username = "szelagkamil0@gmail.com";
-        password ="kmlszelg";
+        password ="kmlszelg";*/
 
         check(host, mailStoreType, username, password);
     }

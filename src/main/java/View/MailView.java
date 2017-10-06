@@ -22,7 +22,7 @@ public class MailView {
 
     public void init(){
 
-        Font font = new Font("Arial", Font.ITALIC, 18);
+        Font font = new Font("Arial", Font.ITALIC, 40);
         frame = new JFrame();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,6 +47,8 @@ public class MailView {
         logoutButton.setBounds((int)(dim.getWidth()/2-200),(int)(x*3+x/2),(int) dim.getWidth()/2-200,(int)(x/2));
         logoutButton.setFont(font.deriveFont(Font.BOLD));
         frame.add(logoutButton);
+
+
 
         JTextArea msgField = new JTextArea();
         msgField.setEditable(false);

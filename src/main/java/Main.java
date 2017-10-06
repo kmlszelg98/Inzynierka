@@ -6,6 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+
 public class Main {
 
     //private static final SessionFactory ourSessionFactory;
@@ -28,12 +32,11 @@ public class Main {
     public static void main(String[] args) {
 
 
-        /*LoginModel model = new LoginModel();
+        LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
-        new LoginController(model,view);*/
-        Imap.Imap imap = new Imap.Imap();
-        imap.start("","","","");
-
+        new LoginController(model,view);
+        /*Imap.Imap imap = new Imap.Imap();
+        imap.start("","","","");*/
 
     }
 }

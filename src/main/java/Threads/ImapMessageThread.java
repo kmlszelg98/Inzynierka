@@ -9,26 +9,25 @@ import java.io.IOException;
 /**
  * Created by Kamil on 03.10.2017.
  */
-public class ImapInitThread implements Runnable{
+public class ImapMessageThread extends Thread{
 
-    public static MessageImap[] imaps;
-    private int id;
+    public MessageImap messageImap;
     private Message message;
 
-    public ImapInitThread(int id, Message message) {
-        this.id = id;
+    public ImapMessageThread(Message message) {
         this.message = message;
     }
 
-    public static void setImaps(MessageImap[] imaps) {
-        ImapInitThread.imaps = imaps;
+    public MessageImap getMessage() {
+        return messageImap;
     }
 
     public void run() {
         Imap imap = new Imap();
         try {
-            MessageImap messageImap = imap.init(message);
-            System.out.println(id+" "+messageImap.getSubject());
+            //MessageImap messageImap = imap.init(message);
+            this.messageImap = imap.init(message);
+            System.out.println("Next "+messageImap.getSubject());
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IOException e) {

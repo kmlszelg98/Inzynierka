@@ -12,24 +12,27 @@ import java.util.List;
  */
 public class InboxModel {
 
-    private List<MessageImap> list;
+    private MessageImap message;
+    public boolean isFirst;
 
-    public InboxModel(String name, String password) {
-        list = new ArrayList<MessageImap>();
-        String host = "imap.gmail.com";
-        String mailStoreType = "imaps";
-        String username = "kmlszelg98@gmail.com";
-        String pass ="kmlszelg";
-        Imap imap = MailController.getImap();
-        imap.start(host,mailStoreType,username,pass);
-        list = imap.getList();
+    public InboxModel(MessageImap message) {
+        this.message = message;
+        isFirst = true;
     }
 
-    public List<MessageImap> getList() {
-        return list;
+    public boolean isFirst() {
+        return isFirst;
     }
 
-    public void setList(List<MessageImap> list) {
-        this.list = list;
+    public void setFirst(boolean first) {
+        isFirst = first;
+    }
+
+    public MessageImap getMessage() {
+        return message;
+    }
+
+    public void setMessage(MessageImap message) {
+        this.message = message;
     }
 }
