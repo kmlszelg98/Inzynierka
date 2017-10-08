@@ -19,6 +19,7 @@ public class RegisterView {
     private JTextField mailArea;
     private JComboBox typeBox;
     private JButton registerButton;
+    private JPanel panel;
 
     public RegisterView(RegisterModel model) {
         this.model = model;
@@ -29,6 +30,9 @@ public class RegisterView {
         WindowHelper helper = new WindowHelper();
         helper.setView();
         frame = new JFrame();
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
 
         int width = 600;
         int height = 800;
@@ -40,7 +44,7 @@ public class RegisterView {
         JLabel nameLabel = new JLabel("NAZWA");
         nameLabel.setBounds(70,50,150,50);
         nameLabel.setFont(font.deriveFont(Font.BOLD));
-        frame.add(nameLabel);
+        panel.add(nameLabel);
 
         nameArea = new JTextField(model.getName());
         nameArea.setBounds(270,60,230,30);
@@ -48,12 +52,12 @@ public class RegisterView {
         nameArea.setBackground(Color.LIGHT_GRAY);
         nameArea.setForeground(Color.BLACK);
         nameArea.setBorder(border);
-        frame.add(nameArea);
+        panel.add(nameArea);
 
         JLabel passLabel = new JLabel("HASLO");
         passLabel.setBounds(70,150,150,50);
         passLabel.setFont(font.deriveFont(Font.BOLD));
-        frame.add(passLabel);
+        panel.add(passLabel);
 
         passArea = new JTextField(model.getPassword());
         passArea.setBounds(270,160,230,30);
@@ -61,12 +65,12 @@ public class RegisterView {
         passArea.setBackground(Color.LIGHT_GRAY);
         passArea.setForeground(Color.BLACK);
         passArea.setBorder(border);
-        frame.add(passArea);
+        panel.add(passArea);
 
         JLabel mailLabel = new JLabel("EMAIL");
         mailLabel.setBounds(70,250,150,50);
         mailLabel.setFont(font.deriveFont(Font.BOLD));
-        frame.add(mailLabel);
+        panel.add(mailLabel);
 
         mailArea = new JTextField(model.getPassword());
         mailArea.setBounds(270,260,230,30);
@@ -74,12 +78,12 @@ public class RegisterView {
         mailArea.setBackground(Color.LIGHT_GRAY);
         mailArea.setForeground(Color.BLACK);
         mailArea.setBorder(border);
-        frame.add(mailArea);
+        panel.add(mailArea);
 
         JLabel typeLabel = new JLabel("TYP");
         typeLabel.setBounds(70,350,150,50);
         typeLabel.setFont(font.deriveFont(Font.BOLD));
-        frame.add(typeLabel);
+        panel.add(typeLabel);
 
         String [] types = {"intelektualnie", "niewidzący", "ruchowo"};
         typeBox = new JComboBox(types);
@@ -88,17 +92,14 @@ public class RegisterView {
         typeBox.setBackground(Color.LIGHT_GRAY);
         typeBox.setForeground(Color.BLACK);
         typeBox.setBorder(border);
-        frame.add(typeBox);
+        panel.add(typeBox);
 
         registerButton= new JButton("REJESTRUJ");
         registerButton.setBounds(200,480,200,50);
         registerButton.setFont(font.deriveFont(Font.BOLD));
-        frame.add(registerButton);
+        panel.add(registerButton);
 
-
-        JTextArea msgField = new JTextArea();
-        msgField.setEditable(false);
-        frame.add(msgField);
+        frame.getContentPane().add(panel);
 
         frame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
         frame.setTitle("REGISTER FORM");

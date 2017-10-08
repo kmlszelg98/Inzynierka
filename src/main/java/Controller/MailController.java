@@ -1,5 +1,6 @@
 package Controller;
 
+import Helpers.FrameHelper;
 import Helpers.WindowHelper;
 import Imap.Imap;
 import Model.LoginModel;
@@ -35,7 +36,7 @@ public class MailController {
 
     public void setListeners(){
         WindowHelper helper = new WindowHelper();
-        helper.closeWindow(view.getFrame());
+        helper.closeWindow(FrameHelper.frame);
 
         view.getFacebookButton().addActionListener(new ActionListener() {
 
@@ -47,7 +48,6 @@ public class MailController {
         view.getImapButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                view.getFrame().dispose();
                 ImapView view = new ImapView();
                 new ImapController(view);
             }
@@ -63,7 +63,6 @@ public class MailController {
         view.getLogoutButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                view.getFrame().dispose();
                 LoginModel model = new LoginModel();
                 LoginView view = new LoginView(model);
                 new LoginController(model,view);

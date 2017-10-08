@@ -1,5 +1,6 @@
 package View;
 
+import Helpers.FrameHelper;
 import Helpers.WindowHelper;
 
 import javax.swing.*;
@@ -10,11 +11,11 @@ import java.awt.*;
  */
 public class MailView {
 
-    private JFrame frame;
     private JButton imapButton;
     private JButton skypeButton;
     private JButton facebookButton;
     private JButton logoutButton;
+    private JPanel panel;
 
     public MailView() {
         init();
@@ -22,8 +23,12 @@ public class MailView {
 
     public void init(){
 
+
         Font font = new Font("Arial", Font.ITALIC, 40);
-        frame = new JFrame();
+
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         double x = dim.getHeight()/5;
@@ -31,37 +36,27 @@ public class MailView {
         imapButton = new JButton("MAIL");
         imapButton.setBounds(300,(int)(x/2),(int) dim.getWidth()/2-200,(int)(x/2));
         imapButton.setFont(font.deriveFont(Font.BOLD));
-        frame.add(imapButton);
+        panel.add(imapButton);
 
         skypeButton = new JButton("SKYPE");
         skypeButton.setBounds((int)(dim.getWidth()/2-200),(int)(x+x/2),(int) dim.getWidth()/2-200,(int)(x/2));
         skypeButton.setFont(font.deriveFont(Font.BOLD));
-        frame.add(skypeButton);
+        panel.add(skypeButton);
 
         facebookButton = new JButton("FACEBOOK");
         facebookButton.setBounds(300,(int)(x*2+x/2),(int) dim.getWidth()/2-200,(int)(x/2));
         facebookButton.setFont(font.deriveFont(Font.BOLD));
-        frame.add(facebookButton);
+        panel.add(facebookButton);
 
         logoutButton = new JButton("WYLOGUJ");
         logoutButton.setBounds((int)(dim.getWidth()/2-200),(int)(x*3+x/2),(int) dim.getWidth()/2-200,(int)(x/2));
         logoutButton.setFont(font.deriveFont(Font.BOLD));
-        frame.add(logoutButton);
+        panel.add(logoutButton);
 
-
-
-        JTextArea msgField = new JTextArea();
-        msgField.setEditable(false);
-        frame.add(msgField);
-
-        frame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
-        frame.setTitle("Aplikacja");
-
-        frame.setLocation(0,0);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        FrameHelper.frame.getContentPane().removeAll();
+        FrameHelper.frame.getContentPane().add(panel);
+        FrameHelper.frame.revalidate();
+        FrameHelper.frame.repaint();
 
     }
 
@@ -81,7 +76,4 @@ public class MailView {
         return logoutButton;
     }
 
-    public JFrame getFrame() {
-        return frame;
-    }
 }

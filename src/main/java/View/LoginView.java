@@ -18,6 +18,7 @@ public class LoginView {
     private JPasswordField passArea;
     private JButton loginButton;
     private JButton registerButton;
+    private JPanel panel;
 
     public LoginView(LoginModel model) {
         this.model = model;
@@ -29,6 +30,9 @@ public class LoginView {
         WindowHelper helper = new WindowHelper();
         helper.setView();
         mainFrame = new JFrame();
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(Color.WHITE);
 
         int width = 600;
         int height = 400;
@@ -40,7 +44,7 @@ public class LoginView {
         JLabel nameLabel = new JLabel("NAZWA");
         nameLabel.setBounds(70,50,150,50);
         nameLabel.setFont(font.deriveFont(Font.BOLD));
-        mainFrame.add(nameLabel);
+        panel.add(nameLabel);
 
         nameArea = new JTextField(model.getName());
         nameArea.setBounds(270,60,230,30);
@@ -48,12 +52,12 @@ public class LoginView {
         nameArea.setBackground(Color.LIGHT_GRAY);
         nameArea.setForeground(Color.BLACK);
         nameArea.setBorder(border);
-        mainFrame.add(nameArea);
+        panel.add(nameArea);
 
         JLabel passLabel = new JLabel("HASLO");
         passLabel.setBounds(70,150,150,50);
         passLabel.setFont(font.deriveFont(Font.BOLD));
-        mainFrame.add(passLabel);
+        panel.add(passLabel);
 
         passArea = new JPasswordField(model.getPassword());
         passArea.setBounds(270,160,230,30);
@@ -61,23 +65,19 @@ public class LoginView {
         passArea.setBackground(Color.LIGHT_GRAY);
         passArea.setForeground(Color.BLACK);
         passArea.setBorder(border);
-        mainFrame.add(passArea);
+        panel.add(passArea);
 
         loginButton= new JButton("LOGUJ");
         loginButton.setBounds(50,280,200,50);
         loginButton.setFont(font.deriveFont(Font.BOLD));
-        mainFrame.add(loginButton);
+        panel.add(loginButton);
 
         registerButton= new JButton("REJESTRUJ");
         registerButton.setBounds(350,280,200,50);
         registerButton.setFont(font.deriveFont(Font.BOLD));
-        mainFrame.add(registerButton);
+        panel.add(registerButton);
 
-
-        JTextArea msgField = new JTextArea();
-        msgField.setEditable(false);
-        mainFrame.add(msgField);
-
+        mainFrame.getContentPane().add(panel);
         mainFrame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
         mainFrame.setTitle("LOGIN FORM");
         mainFrame.setSize(600,400);//600x500

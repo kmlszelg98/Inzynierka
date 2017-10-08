@@ -27,7 +27,6 @@ public class ImapMessageThread extends Thread{
         try {
             //MessageImap messageImap = imap.init(message);
             this.messageImap = imap.init(message);
-            System.out.println("Next "+messageImap.getSubject());
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IOException e) {

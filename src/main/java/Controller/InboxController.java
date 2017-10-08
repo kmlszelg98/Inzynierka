@@ -1,10 +1,14 @@
 package Controller;
 
+import Helpers.FrameHelper;
 import Helpers.WindowHelper;
+import Imap.Imap;
 import Imap.MessageImap;
 import Model.InboxModel;
+import View.ImapView;
 import View.InboxView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,14 +27,30 @@ public class InboxController {
     }
 
     public void setListeners(){
-        WindowHelper helper = new WindowHelper();
-        helper.closeWindow(view.getFrame());
 
         view.getNext().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                model.setMessage(new MessageImap());
-                view.getFrame().revalidate();
-                view.getFrame().repaint();
+                if(Imap.id<(Imap.messages.length-1)) {
+                    model.setMessage(Imap.getNextMessage());
+                    view.update();
+                }
+            }
+        });
+
+        view.getPrev().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(Imap.id>0) {
+                    model.setMessage(Imap.getPrevMessage());
+                    view.update();
+                }
+            }
+        });
+
+        view.getBack().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Imap.id=0;
+                ImapView view = new ImapView();
+                new ImapController(view);
             }
         });
     }

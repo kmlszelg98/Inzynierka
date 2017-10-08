@@ -1,5 +1,6 @@
 package Controller;
 
+import Helpers.FrameHelper;
 import Helpers.WindowHelper;
 import Imap.Imap;
 import Model.LoginModel;
@@ -37,6 +38,7 @@ public class LoginController {
             public void actionPerformed(ActionEvent e) {
                 view.updateModel();
                 view.getMainFrame().dispose();
+                new FrameHelper();
                 MailView mailView = new MailView();
                 Imap imap = new Imap();
                 imap.start("imap.gmail.com","imaps","szelagkamil0@gmail.com","kmlszelg");

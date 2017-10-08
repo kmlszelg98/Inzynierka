@@ -13,9 +13,9 @@ import java.util.Properties;
  */
 public class Imap
 {
-    private static Message[] messages;
+    public static Message[] messages;
     private List<MessageImap> list;
-    private static int id;
+    public static int id;
 
     private String replace(String word){
         String plain = word.replaceAll("\\<.*?\\>", " ");
@@ -95,9 +95,8 @@ public class Imap
         }
     }
 
-    public static MessageImap getFirstMessage(){
-        System.out.println("Start :)");
-        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-1]);
+    public static MessageImap getNextMessage(){
+        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-id-1]);
         imapThread.start();
         try {
             imapThread.join();
@@ -105,43 +104,23 @@ public class Imap
             e.printStackTrace();
         }
         id = id+1;
-        System.out.println("End1");
+        return imapThread.getMessage();
+    }
+
+    public static MessageImap getPrevMessage(){
+        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-id+1]);
+        imapThread.start();
+        try {
+            imapThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        id = id-1;
         return imapThread.getMessage();
     }
 
 
-    public static void getMessages(){
-        System.out.println("Start1");
-        int counter = 2;
-        ImapMessageThread[] imapMessageThread = new ImapMessageThread[counter];
 
-        if(id>1) {
-            imapMessageThread[0] = new ImapMessageThread(messages[messages.length - 1 - id]);
-            imapMessageThread[1] = new ImapMessageThread(messages[messages.length + 1 - id]);
-
-
-            for (int j = 0; j < counter; j++) {
-                imapMessageThread[j].start();
-            }
-
-            for (int i = 0; i < counter; i++) {
-                try {
-                    imapMessageThread[i].join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            imapMessageThread[0] = new ImapMessageThread(messages[messages.length - 2]);
-            imapMessageThread[0].start();
-            try {
-                imapMessageThread[0].join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("End2");
-    }
 
     public List<MessageImap> getList() {
         return list;
