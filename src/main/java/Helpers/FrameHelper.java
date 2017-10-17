@@ -12,7 +12,7 @@ public class FrameHelper {
 
     public FrameHelper(){
         frame = new JFrame();
-        frame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
+        frame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20)); /******/
         frame.setTitle("Aplikacja");
 
         frame.setLocation(0,0);

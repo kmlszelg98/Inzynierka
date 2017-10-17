@@ -1,6 +1,7 @@
 package View;
 
 import Helpers.FrameHelper;
+import Helpers.ViewHelper;
 import Model.InboxModel;
 
 import javax.swing.*;
@@ -61,21 +62,29 @@ public class InboxView {
         read = new JButton("ODCZYTAJ");
         read.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 + x2/2),(int)w,(int)(x2/2));
         read.setFont(font.deriveFont(Font.BOLD));
+        read.setBackground(Color.WHITE);
+        read.setIcon(ViewHelper.setIcon("read.png",(int)(x2/2.5)));
         panel.add(read);
 
         next = new JButton("NASTĘPNY");
         next.setBounds((int)(dim.getWidth()/2+100),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
         next.setFont(font.deriveFont(Font.BOLD));
+        next.setBackground(Color.WHITE);
+        next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));
         panel.add(next);
 
         prev = new JButton("POPRZEDNI");
         prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
         prev.setFont(font.deriveFont(Font.BOLD));
+        prev.setBackground(Color.WHITE);
+        prev.setIcon(ViewHelper.setIcon("prev.png",(int)(x2/2)));
         panel.add(prev);
 
         back = new JButton("WSTECZ");
         back.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
         back.setFont(font.deriveFont(Font.BOLD));
+        back.setBackground(Color.WHITE);
+        back.setIcon(ViewHelper.setIcon("return.png",(int)(x2/2)));
         panel.add(back);
 
         FrameHelper.frame.getContentPane().removeAll();

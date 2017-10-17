@@ -1,10 +1,12 @@
 package Imap;
 
 import Threads.ImapMessageThread;
+import net.htmlparser.jericho.Source;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +34,39 @@ public class Imap
 
     }
 
+    public String extractAllText(String htmlText){
+        Source source = new Source(htmlText);
+        return source.getTextExtractor().toString();
+    }
+
+    public void writePart(Part p, StringBuilder builder) throws Exception {
+
+        //check if the content is plain text
+        if (p.isMimeType("text/plain")) {
+            //System.out.println((String) p.getContent());
+            builder.append((String)"\n");
+            builder.append((String) p.getContent());
+        }
+        //check if the content has attachment
+        else if (p.isMimeType("multipart/*")) {
+            System.out.println("Multipart");
+            Multipart mp = (Multipart) p.getContent();
+            int count = mp.getCount();
+            for (int i = 0; i < count; i++)
+                writePart(mp.getBodyPart(i),builder);
+        }
+        else {
+            Object o = p.getContent();
+            if (o instanceof String) {
+                String extracted = extractAllText((String) ((String) o)).substring(3).replaceAll("â\u0080\u0098","'");
+                extracted = extracted.replaceAll("\\s{2,}", "\n");
+                builder.append(extracted);
+            }
+
+        }
+
+    }
+
     public MessageImap init (Message message) throws MessagingException, IOException {
         MessageImap messageImap = new MessageImap();
         messageImap.setSubject(message.getSubject());
@@ -41,31 +76,13 @@ public class Imap
         String temp = "";
         StringBuilder builder = new StringBuilder();
         try {
-            multipart = (Multipart) message.getContent();
-            int count = multipart.getCount();
-            for(int k=0;k<count;k++){
-                BodyPart bodyPart = multipart.getBodyPart(k);
-                String disposition = bodyPart.getDisposition();
-                if (disposition != null && (disposition.equalsIgnoreCase("ATTACHMENT"))) {
-                    DataHandler handler = bodyPart.getDataHandler();
-                    attachements.add(handler.getName());
-                }
-                else {
-                    String plain = replace(bodyPart.getContent().toString());
-                    if(!temp.equals(plain)){
-                        temp = plain;
-                        builder.append(plain);
-                    }
-                }
-            }
-        } catch (ClassCastException e){
-            String plain = replace(message.getContent().toString());
-            builder.append(plain);
-        } catch (IOException e) {
+            writePart(message,builder);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         messageImap.setBody(builder.toString());
-        messageImap.setAttachements(attachements);
+        //messageImap.setAttachements(attachements);
         return messageImap;
     }
 

@@ -1,5 +1,7 @@
 package Helpers;
 
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -29,6 +31,7 @@ public class WindowHelper {
 
     public void setView(){
         try {
+
             UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

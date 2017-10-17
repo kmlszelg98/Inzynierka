@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.Arrays;
 
 public class Main {
 
@@ -37,6 +38,7 @@ public class Main {
         new LoginController(model,view);
         /*Imap.Imap imap = new Imap.Imap();
         imap.start("","","","");*/
+
 
     }
 }

@@ -6,6 +6,7 @@ import Imap.Imap;
 import Imap.MessageImap;
 import Model.InboxModel;
 import View.ImapView;
+import View.InboxReadView;
 import View.InboxView;
 
 import javax.swing.*;
@@ -51,6 +52,14 @@ public class InboxController {
                 Imap.id=0;
                 ImapView view = new ImapView();
                 new ImapController(view);
+            }
+        });
+
+        view.getRead().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InboxReadView view = new InboxReadView(model);
+                new InboxReadController(view,model);
             }
         });
     }

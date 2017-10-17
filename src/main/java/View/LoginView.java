@@ -28,11 +28,11 @@ public class LoginView {
     public void init(){
 
         WindowHelper helper = new WindowHelper();
-        helper.setView();
+        helper.setView(); /*******/
         mainFrame = new JFrame();
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(Color.white);
 
         int width = 600;
         int height = 400;
@@ -78,7 +78,7 @@ public class LoginView {
         panel.add(registerButton);
 
         mainFrame.getContentPane().add(panel);
-        mainFrame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));
+        mainFrame.getLayeredPane().getComponent(1).setFont(new Font("Lucida",Font.PLAIN,20));/******/
         mainFrame.setTitle("LOGIN FORM");
         mainFrame.setSize(600,400);//600x500
 
