@@ -2,21 +2,22 @@ package View;
 
 import Helpers.FrameHelper;
 import Helpers.ViewHelper;
-import Model.InboxModel;
+import Model.SkypeChatsModel;
+import Skype.Skype;
+import Skype.SkypeChat;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * Created by Kamil on 05.10.2017.
+ * Created by Kamil on 23.10.2017.
  */
-public class InboxView {
+public class SkypeChatsView {
 
-    private InboxModel model;
+    private SkypeChatsModel model;
     private JPanel panel;
-    private JLabel from;
-    private JLabel subject;
+    private JLabel name;
     private JButton next;
     private JButton prev;
     private JButton read;
@@ -26,13 +27,12 @@ public class InboxView {
     private Border border;
     private Dimension dim;
 
-    public InboxView(InboxModel model) {
+    public SkypeChatsView(SkypeChatsModel model) {
         this.model = model;
         init();
     }
 
-    private void init(){
-
+    public void init(){
         Font font = new Font("Arial", Font.ITALIC, 40);
         font2 = new Font("Arial", Font.ITALIC, 50);
         border = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -44,26 +44,20 @@ public class InboxView {
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         double x = dim.getHeight()/5;
 
-        from = new JLabel("OD: "+model.getMessage().getFrom(),SwingConstants.CENTER);
-        from.setBorder(border);
-        from.setBounds(50,50,(int)(dim.getWidth()-100),200);
-        from.setFont(font2.deriveFont(Font.BOLD));
-        panel.add(from);
-
-        subject = new JLabel("TEMAT: "+model.getMessage().getSubject(),SwingConstants.CENTER);
-        subject.setBorder(border);
-        subject.setBounds(50,300,(int)(dim.getWidth()-100),200);
-        subject.setFont(font2.deriveFont(Font.BOLD));
-        panel.add(subject);
+        name = new JLabel("OD: "+model.getChat().getChatName(),SwingConstants.CENTER);
+        name.setBorder(border);
+        name.setBounds(50,200,(int)(dim.getWidth()-100),200);
+        name.setFont(font2.deriveFont(Font.BOLD));
+        panel.add(name);
 
         double x2 = (dim.getHeight()-600)/3;
         double w = dim.getWidth()/2-200;
 
-        read = new JButton("ODCZYTAJ");
+        read = new JButton("CHAT");
         read.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 + x2/2),(int)w,(int)(x2/2));
         read.setFont(font.deriveFont(Font.BOLD));
         read.setBackground(Color.WHITE);
-        read.setIcon(ViewHelper.setIcon("read.png",(int)(x2/2.5)));
+        read.setIcon(ViewHelper.setIcon("chat.png",(int)(x2/2.5)));
         panel.add(read);
 
         next = new JButton("NASTĘPNY");
@@ -71,7 +65,7 @@ public class InboxView {
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));
-        if(!Imap.Imap.isLast(true)) next.setEnabled(true);
+        if(!Skype.isLast()) next.setEnabled(true);
         else next.setEnabled(false);
         panel.add(next);
 
@@ -80,7 +74,7 @@ public class InboxView {
         prev.setFont(font.deriveFont(Font.BOLD));
         prev.setBackground(Color.WHITE);
         prev.setIcon(ViewHelper.setIcon("prev.png",(int)(x2/2)));
-        if(!Imap.Imap.isFirst()) prev.setEnabled(true);
+        if(!Skype.isFirst()) prev.setEnabled(true);
         else prev.setEnabled(false);
         panel.add(prev);
 
@@ -95,29 +89,22 @@ public class InboxView {
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
-
     }
 
     public void update(){
-        panel.remove(from);
-        from = new JLabel("OD: "+model.getMessage().getFrom(),SwingConstants.CENTER);
-        from.setBorder(border);
-        from.setBounds(50,50,(int)(dim.getWidth()-100),200);
-        from.setFont(font2.deriveFont(Font.BOLD));
-        panel.add(from);
+        panel.remove(name);
+        name = new JLabel("OD: "+model.getChat().getChatName(),SwingConstants.CENTER);
+        name.setBorder(border);
+        name.setBounds(50,200,(int)(dim.getWidth()-100),200);
+        name.setFont(font2.deriveFont(Font.BOLD));
+        panel.add(name);
 
-        panel.remove(subject);
-        subject = new JLabel("TEMAT: "+model.getMessage().getSubject(),SwingConstants.CENTER);
-        subject.setBorder(border);
-        subject.setBounds(50,300,(int)(dim.getWidth()-100),200);
-        subject.setFont(font2.deriveFont(Font.BOLD));
-        panel.add(subject);
+        if(!Skype.isLast()) next.setEnabled(true);
+        else next.setEnabled(false);
 
-        if(!Imap.Imap.isFirst()) prev.setEnabled(true);
+        if(!Skype.isFirst()) prev.setEnabled(true);
         else prev.setEnabled(false);
 
-        if(!Imap.Imap.isLast(true)) next.setEnabled(true);
-        else next.setEnabled(false);
 
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
@@ -126,6 +113,9 @@ public class InboxView {
 
     }
 
+    public void setModel(SkypeChatsModel model) {
+        this.model = model;
+    }
 
     public JButton getNext() {
         return next;

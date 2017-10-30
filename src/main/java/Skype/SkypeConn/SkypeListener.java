@@ -1,5 +1,7 @@
-package Skype;
+package Skype.SkypeConn;
 
+import Skype.Skype;
+import Skype.SkypeMessage;
 import com.samczsun.skype4j.events.EventHandler;
 import com.samczsun.skype4j.events.Listener;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;

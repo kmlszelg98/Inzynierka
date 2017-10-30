@@ -47,6 +47,15 @@ public class InboxReadView {
             int width = fm.stringWidth(array[i]);
             int c = width/(int)(dim.getWidth()-100) +1;
             /*Jesli dlugosc jednej linijki tekstu przekracza normy to podziel tekst samemu na mnniej wiecej rowne fragmenty*/
+            if(c >= count ){
+                if(how > 0) {
+                    number = number+limit;
+                    break;
+                } else {
+                    temp += array[i];
+                    limit++;
+                }
+            }
             if(how+c<count){
                 if(how>0) temp+="\n";
                 temp += array[i];
@@ -73,7 +82,6 @@ public class InboxReadView {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         body = new JTextArea();//"",SwingConstants.CENTER);
-        body.setBorder(border);
         body.setFont(font2.deriveFont(Font.BOLD));
         body.setLineWrap(true);
         body.setEditable(false);
@@ -85,18 +93,24 @@ public class InboxReadView {
         array = text.split("\n");
         String temp = setValue();
 
+
         body.setText(temp);
         body.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
 
-        panel.add(body);
+        JScrollPane pane = new JScrollPane(body);
+        pane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
+        pane.setBorder(border);
+        panel.add(pane);
+
+        //panel.add(body);
 
         double w = dim.getWidth()/2-200;
 
-        next = new JButton("DALEJ");
+        next = new JButton("PRZEWIŃ");
         next.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-400),(int)w,100);
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
-        next.setIcon(ViewHelper.setIcon("right.png",100));
+        next.setIcon(ViewHelper.setIcon("scroll.png",100));
         if(number>=(array.length)){
             next.setEnabled(false);
         }

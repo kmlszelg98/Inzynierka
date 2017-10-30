@@ -16,8 +16,9 @@ import java.util.Properties;
 public class Imap
 {
     public static Message[] messages;
-    private List<MessageImap> list;
+    public static Message[] sentMessages;
     public static int id;
+    public static int type;
 
     private String replace(String word){
         String plain = word.replaceAll("\\<.*?\\>", " ");
@@ -43,13 +44,11 @@ public class Imap
 
         //check if the content is plain text
         if (p.isMimeType("text/plain")) {
-            //System.out.println((String) p.getContent());
             builder.append((String)"\n");
             builder.append((String) p.getContent());
         }
         //check if the content has attachment
         else if (p.isMimeType("multipart/*")) {
-            System.out.println("Multipart");
             Multipart mp = (Multipart) p.getContent();
             int count = mp.getCount();
             for (int i = 0; i < count; i++)
@@ -57,10 +56,12 @@ public class Imap
         }
         else {
             Object o = p.getContent();
-            if (o instanceof String) {
-                String extracted = extractAllText((String) ((String) o)).substring(3).replaceAll("â\u0080\u0098","'");
+            if (o instanceof String ) {
+                String extracted = extractAllText((String) ((String) o)).replaceAll("â\u0080\u0098","'").replaceAll("ï»¿","");
                 extracted = extracted.replaceAll("\\s{2,}", "\n");
-                builder.append(extracted);
+                String temp = builder.toString().replaceAll("\n","");
+                if(temp.length()>=1) temp = temp.substring(0,temp.length()-1);
+                if (!extracted.equals(new String(temp))) builder.append(extracted);
             }
 
         }
@@ -80,7 +81,6 @@ public class Imap
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         messageImap.setBody(builder.toString());
         //messageImap.setAttachements(attachements);
         return messageImap;
@@ -102,6 +102,19 @@ public class Imap
             Folder emailFolder = store.getFolder("INBOX");//[Gmail]/Wszystkie?Wysłane - co z innymi przegladarkami
             emailFolder.open(Folder.READ_ONLY);
 
+            /*Folder[] folders = store.getDefaultFolder().list();
+            for(Folder f : folders){
+                String name = f.getFullName();
+                if(name.indexOf("Wysłane") != -1) {
+                   f.open(Folder.READ_ONLY);
+                   sentMessages = f.getMessages();
+                   break;
+                }
+            }*/
+            Folder sentFolder = store.getFolder("[Gmail]/Wysłane");
+            sentFolder.open(Folder.READ_ONLY);
+            sentMessages = sentFolder.getMessages();
+
             messages = emailFolder.getMessages();
 
             //emailFolder.close(false);
@@ -112,8 +125,13 @@ public class Imap
         }
     }
 
-    public static MessageImap getNextMessage(){
-        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-id-1]);
+    public static MessageImap getNextMessage(boolean type){
+        ImapMessageThread imapThread;
+        if(type) {
+            imapThread = new ImapMessageThread(messages[messages.length - id - 1]);
+        } else {
+            imapThread = new ImapMessageThread(sentMessages[sentMessages.length - id - 1]);
+        }
         imapThread.start();
         try {
             imapThread.join();
@@ -121,11 +139,17 @@ public class Imap
             e.printStackTrace();
         }
         id = id+1;
+
         return imapThread.getMessage();
     }
 
-    public static MessageImap getPrevMessage(){
-        ImapMessageThread imapThread = new ImapMessageThread(messages[messages.length-id+1]);
+    public static MessageImap getPrevMessage(boolean type){
+        ImapMessageThread imapThread;
+        if(type) {
+            imapThread = new ImapMessageThread(messages[messages.length - id + 1]);
+        } else {
+            imapThread = new ImapMessageThread(sentMessages[sentMessages.length - id + 1]);
+        }
         imapThread.start();
         try {
             imapThread.join();
@@ -136,12 +160,29 @@ public class Imap
         return imapThread.getMessage();
     }
 
+    public static boolean isLast(boolean type){
+        if(type) {
+            if (id == messages.length - 1){
+                return true;
+            }
+            else {
+                return false;
+            }
+        } else {
+            if (id == sentMessages.length - 1) return true;
+            else return false;
+        }
 
-
-
-    public List<MessageImap> getList() {
-        return list;
     }
+
+    public static boolean isFirst(){
+        if ( id == 1){
+            return true;
+        }
+        return false;
+    }
+
+
 
     public void start(String host, String mailStoreType, String username, String password){
 

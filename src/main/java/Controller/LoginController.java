@@ -5,6 +5,7 @@ import Helpers.WindowHelper;
 import Imap.Imap;
 import Model.LoginModel;
 import Model.RegisterModel;
+import Skype.SkypeConn.SkypeConnection;
 import View.LoginView;
 import View.MailView;
 import View.RegisterView;
@@ -40,6 +41,8 @@ public class LoginController {
                 view.getMainFrame().dispose();
                 new FrameHelper();
                 MailView mailView = new MailView();
+                SkypeConnection connection = new SkypeConnection("kmlszelg98","kmlszelg98");
+                connection.printChats();
                 Imap imap = new Imap();
                 imap.start("imap.gmail.com","imaps","szelagkamil0@gmail.com","kmlszelg");
                 new MailController(mailView);

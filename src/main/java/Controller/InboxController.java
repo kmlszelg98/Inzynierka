@@ -31,18 +31,32 @@ public class InboxController {
 
         view.getNext().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(Imap.id<(Imap.messages.length-1)) {
-                    model.setMessage(Imap.getNextMessage());
-                    view.update();
+                if(Imap.type==0) {
+                    if (Imap.id < (Imap.messages.length - 1)) {
+                        model.setMessage(Imap.getNextMessage(true));
+                        view.update();
+                    }
+                } else {
+                    if (Imap.id < (Imap.sentMessages.length - 1)) {
+                        model.setMessage(Imap.getNextMessage(false));
+                        view.update();
+                    }
                 }
             }
         });
 
         view.getPrev().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(Imap.id>0) {
-                    model.setMessage(Imap.getPrevMessage());
-                    view.update();
+                if(Imap.type==0) {
+                    if (Imap.id > 0) {
+                        model.setMessage(Imap.getPrevMessage(true));
+                        view.update();
+                    }
+                } else {
+                    if (Imap.id > 0) {
+                        model.setMessage(Imap.getPrevMessage(false));
+                        view.update();
+                    }
                 }
             }
         });

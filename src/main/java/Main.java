@@ -1,5 +1,8 @@
 import Controller.LoginController;
+import Imap.MailSender;
 import Model.LoginModel;
+import Skype.Skype;
+import Skype.SkypeConn.SkypeConnection;
 import View.LoginView;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -36,6 +39,11 @@ public class Main {
         LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
         new LoginController(model,view);
+
+        /*Skype skype = new Skype();
+        skype.init("kmlszelg98");
+        System.out.println("Finish");*/
+
         /*Imap.Imap imap = new Imap.Imap();
         imap.start("","","","");*/
 
