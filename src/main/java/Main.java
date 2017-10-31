@@ -40,6 +40,7 @@ public class Main {
         LoginView view = new LoginView(model);
         new LoginController(model,view);
 
+
         /*Skype skype = new Skype();
         skype.init("kmlszelg98");
         System.out.println("Finish");*/
