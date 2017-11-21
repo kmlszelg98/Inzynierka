@@ -26,6 +26,7 @@ public class SendMailBodyController {
         view.getAccept().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                view.updateModel();
                 /*MailSender sender = new MailSender();
                 sender.send();*/
                 ImapView view = new ImapView();

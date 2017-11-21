@@ -1,5 +1,6 @@
 package Helpers;
 
+import Controller.LoginController;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 
 import javax.swing.*;
@@ -23,6 +24,12 @@ public class WindowHelper {
                         null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options, options[1]) == JOptionPane.YES_OPTION){
 
+                    LoginController.thread.exit = true;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     System.exit(0);
                 }
             }

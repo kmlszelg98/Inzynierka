@@ -1,8 +1,10 @@
 package View;
 
+import Controller.LoginController;
 import Helpers.FrameHelper;
 import Helpers.ViewHelper;
 import Model.InboxModel;
+import Wideo.JPanelOpenCV;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,8 +16,8 @@ import java.awt.*;
 public class InboxReadView {
 
     private InboxModel model;
-    private JPanel panel;
-    private JLabel subject;
+    private JPanelOpenCV panel;
+    private JScrollPane bodyPane;
     private JTextArea body;
     private int number;
     private String[] array;
@@ -39,7 +41,10 @@ public class InboxReadView {
     public String setValue(){
         FontMetrics fm = body.getFontMetrics(body.getFont());
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        int count = (int)(dim.getHeight()-500)/50 -1;
+        int count = (LoginController.user.getType()!=1)?(int)(dim.getHeight()-500)/50 -1: (int)(dim.getHeight()-300)/50-1;
+        if(LoginController.user.getType()==1){
+            count = count -3;
+        }
         int how = 0;
         String temp = "";
         int limit = 0;
@@ -71,7 +76,7 @@ public class InboxReadView {
     }
 
     public void init(){
-        panel = new JPanel();
+        panel = new JPanelOpenCV();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
 
@@ -95,19 +100,15 @@ public class InboxReadView {
 
 
         body.setText(temp);
-        body.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
-
-        JScrollPane pane = new JScrollPane(body);
-        pane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
-        pane.setBorder(border);
-        panel.add(pane);
+        bodyPane = new JScrollPane(body);
+        bodyPane.setBorder(border);
+        panel.add(bodyPane);
 
         //panel.add(body);
 
         double w = dim.getWidth()/2-200;
 
         next = new JButton("PRZEWIŃ");
-        next.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-400),(int)w,100);
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("scroll.png",100));
@@ -117,15 +118,34 @@ public class InboxReadView {
         panel.add(next);
 
         back = new JButton("WSTECZ");
-        back.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-250),(int)w,100);
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",100));
         panel.add(back);
 
+        setBounds();
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
+    }
+
+    public JPanelOpenCV getPanel() {
+        return panel;
+    }
+
+    public void setBounds(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        double w = dim.getWidth()/2-200;
+
+        if(LoginController.user.getType()==1){
+            bodyPane.setBounds((int)(dim.getWidth()/3),50,(int)(2*dim.getWidth()/3-100),(int)(dim.getHeight()-300));
+            next.setBounds(100,(int)(dim.getHeight()-200),(int)w,100);
+            back.setBounds((int)(dim.getWidth()/2+100),(int)(dim.getHeight()-200),(int)w,100);
+        } else {
+            bodyPane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
+            next.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-400),(int)w,100);
+            back.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-250),(int)w,100);
+        }
     }
 }

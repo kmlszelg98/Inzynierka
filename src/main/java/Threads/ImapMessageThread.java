@@ -22,6 +22,7 @@ public class ImapMessageThread extends Thread{
         return messageImap;
     }
 
+    @Override
     public void run() {
         Imap imap = new Imap();
         try {

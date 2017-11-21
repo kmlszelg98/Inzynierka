@@ -29,5 +29,14 @@
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.15.1" level="project" />
     <orderEntry type="library" name="Maven: com.samczsun:skype4j:0.1.5" level="project" />
     <orderEntry type="library" name="Maven: net.htmlparser.jericho:jericho-html:3.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: sample:com.sample:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/jars/opencv-2413.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

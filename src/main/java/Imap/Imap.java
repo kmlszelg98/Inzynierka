@@ -160,8 +160,8 @@ public class Imap
         return imapThread.getMessage();
     }
 
-    public static boolean isLast(boolean type){
-        if(type) {
+    public static boolean isLast(boolean types){
+        if(type==0) {
             if (id == messages.length - 1){
                 return true;
             }

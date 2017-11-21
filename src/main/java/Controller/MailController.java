@@ -6,10 +6,12 @@ import Imap.Imap;
 import Model.LoginModel;
 import Model.SkypeChatsModel;
 import Skype.Skype;
+import Threads.CameraThread;
 import View.ImapView;
 import View.LoginView;
 import View.MailView;
 import View.SkypeChatsView;
+import sun.rmi.runtime.Log;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,8 +39,8 @@ public class MailController {
     }
 
     public void setListeners(){
-        WindowHelper helper = new WindowHelper();
-        helper.closeWindow(FrameHelper.frame);
+        /*WindowHelper helper = new WindowHelper();
+        helper.closeWindow(FrameHelper.frame);*/
 
         view.getFacebookButton().addActionListener(new ActionListener() {
 
@@ -50,16 +52,35 @@ public class MailController {
         view.getImapButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                ImapView view = new ImapView();
-                new ImapController(view);
+                if(LoginController.user.getType()==1) {
+                    LoginController.thread.exit = true;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e2) {
+                        e2.printStackTrace();
+                    }
+                    ImapView view = new ImapView();
+                    new ImapController(view);
+                    LoginController.thread = new CameraThread(view.getPanel());
+                    LoginController.thread.start();
+                } else {
+                    ImapView view = new ImapView();
+                    new ImapController(view);
+                }
             }
         });
 
         view.getSkypeButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                LoginController.thread.exit = true;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e2) {
+                    e2.printStackTrace();
+                }
                 Skype skype = new Skype();
-                skype.init("kmlszelg98");
+                skype.init(LoginController.user.getSkypeName());
                 Skype.number = 0;
                 SkypeChatsModel model = new SkypeChatsModel(Skype.get());
                 SkypeChatsView view = new SkypeChatsView(model);
@@ -70,6 +91,12 @@ public class MailController {
         view.getLogoutButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                LoginController.thread.exit = true;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e2) {
+                    e2.printStackTrace();
+                }
                 FrameHelper.frame.dispose();
                 LoginModel model = new LoginModel();
                 LoginView view = new LoginView(model);

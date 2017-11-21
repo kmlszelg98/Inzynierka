@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.opencv.core.Core;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -34,11 +35,12 @@ public class Main {
     }*/
 
     public static void main(String[] args) {
-
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
         new LoginController(model,view);
+
 
 
         /*Skype skype = new Skype();
