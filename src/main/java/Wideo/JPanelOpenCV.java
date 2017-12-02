@@ -1,22 +1,28 @@
 package Wideo;
 
+import Controller.LoginController;
 import Helpers.FrameHelper;
 import org.opencv.core.*;
 import org.opencv.highgui.VideoCapture;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 
-public class JPanelOpenCV extends JPanel{
+public class JPanelOpenCV extends JPanel implements MouseListener{
 
     private BufferedImage image;
     private JButton[][] buttons;
+    private String[][] btn;
+    private boolean clicked = false;
 
+
+    public void setBtn(String[][] btn) {
+        this.btn = btn;
+    }
 
     public void setImage(BufferedImage image) {
         this.image = image;
@@ -35,6 +41,14 @@ public class JPanelOpenCV extends JPanel{
 
     public void setButtons(JButton[][] buttons) {
         this.buttons = buttons;
+    }
+
+    public String[][] getBtn() {
+        return btn;
+    }
+
+    public int getLengthVoice(){
+        return btn.length;
     }
 
     public int getLength(){
@@ -69,7 +83,7 @@ public class JPanelOpenCV extends JPanel{
 
     public void accept(int row){
         buttons[row][0].setBackground(Color.GREEN);
-
+        clicked = false;
         for (ActionListener a : buttons[row][0].getActionListeners()) {
                a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {
                });
@@ -118,13 +132,44 @@ public class JPanelOpenCV extends JPanel{
     }
 
     public JPanelOpenCV() {
+            this.addMouseListener(this);
+            this.setFocusable(true);
+            this.requestFocusInWindow();
+    }
+
+
+    public boolean getClicked() {
+        return clicked;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
     }
 
-    public JPanelOpenCV(BufferedImage img) {
-        image = img;
+    @Override
+    public void mousePressed(MouseEvent e) {
+        clicked = true;
     }
 
+    @Override
+    public void mouseReleased(MouseEvent e) {
 
+    }
 
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }

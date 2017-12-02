@@ -32,6 +32,7 @@ public class InboxView {
     private Border border;
     private Dimension dim;
     private ArrayList<JButton> list;
+    private ArrayList<String> strList;
 
 
     public InboxView(InboxModel model) {
@@ -41,7 +42,8 @@ public class InboxView {
 
     private void init(){
 
-        list = new ArrayList<JButton>();
+        list = new ArrayList<>();
+        strList = new ArrayList<>();
         Font font = new Font("Arial", Font.ITALIC, 40);
         font2 = new Font("Arial", Font.ITALIC, 50);
         border = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -82,6 +84,7 @@ public class InboxView {
         read.setIcon(ViewHelper.setIcon("read.png",(int)(x2/2.5)));
         panel.add(read);
         list.add(read);
+        strList.add("/przyciski/Odczytaj");
 
         back = new JButton("WSTECZ");
         back.setFont(font.deriveFont(Font.BOLD));
@@ -89,6 +92,7 @@ public class InboxView {
         back.setIcon(ViewHelper.setIcon("return.png",(int)(x2/2)));
         panel.add(back);
         list.add(back);
+        strList.add("/przyciski/Wstecz");
 
 
         next = new JButton("NASTĘPNY");
@@ -98,6 +102,7 @@ public class InboxView {
         if(!Imap.Imap.isLast(true)){
             next.setEnabled(true);
             list.add(0,next);
+            strList.add(0,"/przyciski/Następny");
         }
         else next.setEnabled(false);
         panel.add(next);
@@ -110,6 +115,7 @@ public class InboxView {
         if(!Imap.Imap.isFirst()) {
             prev.setEnabled(true);
             list.add(0,prev);
+            strList.add(0,"/przyciski/Poprzedni");
         }
         else prev.setEnabled(false);
 
@@ -123,7 +129,14 @@ public class InboxView {
             buttons[i][0] = list.get(i);
         }
 
+        String[][] btn = new String[strList.size()][1];
+        for(int i=0;i<strList.size();i++){
+            btn[i][0] = strList.get(i);
+        }
+
         panel.setButtons(buttons);
+        panel.setBtn(btn);
+
         setBounds();
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
@@ -147,10 +160,15 @@ public class InboxView {
         list.add(back);
 
 
+        strList = new ArrayList<>();
+        strList.add("/przyciski/Odczytaj");
+        strList.add("/przyciski/Wstecz");
+
         next.setBackground(Color.WHITE);
         if(!Imap.Imap.isLast(true)){
             next.setEnabled(true);
             list.add(0,next);
+            strList.add(0,"/przyciski/Następny");
         }
         else next.setEnabled(false);
 
@@ -158,6 +176,7 @@ public class InboxView {
         if(!Imap.Imap.isFirst()) {
             prev.setEnabled(true);
             list.add(0,prev);
+            strList.add(0,"/przyciski/Poprzedni");
         }
         else prev.setEnabled(false);
 
@@ -166,7 +185,13 @@ public class InboxView {
             buttons[i][0] = list.get(i);
         }
 
+
+        String[][] btn = new String[strList.size()][1];
+        for(int i=0;i<strList.size();i++){
+            btn[i][0] = strList.get(i);
+        }
         panel.setButtons(buttons);
+        panel.setBtn(btn);
 
         setBounds();
         FrameHelper.frame.getContentPane().removeAll();

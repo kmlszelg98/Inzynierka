@@ -7,6 +7,7 @@ import Model.LoginModel;
 import Model.SkypeChatsModel;
 import Skype.Skype;
 import Threads.CameraThread;
+import Threads.VoiceThread;
 import View.ImapView;
 import View.LoginView;
 import View.MailView;
@@ -63,6 +64,11 @@ public class MailController {
                     new ImapController(view);
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    ImapView view = new ImapView();
+                    new ImapController(view);
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
                 } else {
                     ImapView view = new ImapView();
                     new ImapController(view);
@@ -73,11 +79,13 @@ public class MailController {
         view.getSkypeButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                LoginController.thread.exit = true;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e2) {
-                    e2.printStackTrace();
+                if(LoginController.user.getType()==1) {
+                    LoginController.thread.exit = true;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e2) {
+                        e2.printStackTrace();
+                    }
                 }
                 Skype skype = new Skype();
                 skype.init(LoginController.user.getSkypeName());
@@ -85,6 +93,14 @@ public class MailController {
                 SkypeChatsModel model = new SkypeChatsModel(Skype.get());
                 SkypeChatsView view = new SkypeChatsView(model);
                 new SkypeChatsController(view,model);
+                if(LoginController.user.getType()==1){
+                    LoginController.thread = new CameraThread(view.getPanel());
+                    LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMessage("Chat : "+model.getChat().getChatName());
+                    LoginController.voiceThread.start();
+                }
             }
         });
 

@@ -2,6 +2,7 @@ package Controller;
 
 import Model.SendMailModel;
 import Threads.CameraThread;
+import Threads.VoiceThread;
 import View.ImapView;
 import View.SendWideoView;
 
@@ -37,16 +38,26 @@ public class SendWideoController {
                     view.updateModel();
                     view.nextPart();
                     new SendWideoController(view, model);
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
+                    if(LoginController.user.getType()==1) {
+                        LoginController.thread = new CameraThread(view.getPanel());
+                        LoginController.thread.start();
+                    } else {
+                        LoginController.voiceThread = new VoiceThread(view.getPanel());
+                        LoginController.voiceThread.start();
+                    }
                 } else {
                     view.updateModel();
                     /*MailSender sender = new MailSender();
                         sender.send();*/
                     ImapView view = new ImapView();
                     new ImapController(view);
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
+                    if(LoginController.user.getType()==1) {
+                        LoginController.thread = new CameraThread(view.getPanel());
+                        LoginController.thread.start();
+                    } else {
+                        LoginController.voiceThread = new VoiceThread(view.getPanel());
+                        LoginController.voiceThread.start();
+                    }
                 }
 
             }
@@ -63,8 +74,13 @@ public class SendWideoController {
                 }
                 ImapView view = new ImapView();
                 new ImapController(view);
-                LoginController.thread = new CameraThread(view.getPanel());
-                LoginController.thread.start();
+                if(LoginController.user.getType()==1) {
+                    LoginController.thread = new CameraThread(view.getPanel());
+                    LoginController.thread.start();
+                } else {
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
+                }
             }
         });
 
@@ -80,8 +96,13 @@ public class SendWideoController {
                 view.updateModel();
                 view.addMoreSigns();
                 //new SendWideoController(view,model);
-                LoginController.thread = new CameraThread(view.getPanel());
-                LoginController.thread.start();
+                if(LoginController.user.getType()==1) {
+                    LoginController.thread = new CameraThread(view.getPanel());
+                    LoginController.thread.start();
+                } else {
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
+                }
             }
         });
 
@@ -97,8 +118,13 @@ public class SendWideoController {
                 view.updateModel();
                 view.addLetters();
                 //new SendWideoController(view,model);
-                LoginController.thread = new CameraThread(view.getPanel());
-                LoginController.thread.start();
+                if(LoginController.user.getType()==1) {
+                    LoginController.thread = new CameraThread(view.getPanel());
+                    LoginController.thread.start();
+                } else {
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
+                }
             }
         });
     }

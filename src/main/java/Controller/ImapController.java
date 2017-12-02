@@ -5,7 +5,9 @@ import Imap.MessageImap;
 import Model.InboxModel;
 import Model.SendMailModel;
 import Threads.CameraThread;
+import Threads.VoiceThread;
 import View.*;
+import Wideo.Player;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,14 +35,18 @@ public class ImapController {
                 } catch (InterruptedException e2) {
                     e2.printStackTrace();
                 }
-                MessageImap temp = Imap.getNextMessage(true);
                 Imap.type = 0;
+                MessageImap temp = Imap.getNextMessage(true);
                 InboxModel model = new InboxModel(temp);
                 InboxView view = new InboxView(model);
                 new InboxController(model,view);
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(temp);
+                    LoginController.voiceThread.start();
                 }
             }
         });
@@ -56,14 +62,20 @@ public class ImapController {
                 }
 
                 SendMailModel model = new SendMailModel();
-                if(LoginController.user.getType()!=1) {
+                if(LoginController.user.getType()==0) {
                     SendMailTopicView view = new SendMailTopicView(model);
                     new SendMailTopicController(view, model);
                 } else {
                     SendWideoView view = new SendWideoView(model);
                     new SendWideoController(view,model);
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
+                    if(LoginController.user.getType()==1) {
+                        LoginController.thread = new CameraThread(view.getPanel());
+                        LoginController.thread.start();
+                    } else {
+                        LoginController.voiceThread = new VoiceThread(view.getPanel());
+                        LoginController.voiceThread.start();
+
+                    }
                 }
             }
         });
@@ -77,14 +89,18 @@ public class ImapController {
                 } catch (InterruptedException e2) {
                     e2.printStackTrace();
                 }
-                MessageImap temp = Imap.getNextMessage(false);
                 Imap.type = 1;
+                MessageImap temp = Imap.getNextMessage(false);
                 InboxModel model = new InboxModel(temp);
                 InboxView view = new InboxView(model);
                 new InboxController(model,view);
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(temp);
+                    LoginController.voiceThread.start();
                 }
             }
         });
@@ -103,6 +119,9 @@ public class ImapController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
                 }
             }
         });

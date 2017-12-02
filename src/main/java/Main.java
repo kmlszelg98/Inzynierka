@@ -3,7 +3,9 @@ import Imap.MailSender;
 import Model.LoginModel;
 import Skype.Skype;
 import Skype.SkypeConn.SkypeConnection;
+import Threads.VoiceThread;
 import View.LoginView;
+import Wideo.JPanelOpenCV;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,7 +43,8 @@ public class Main {
         LoginView view = new LoginView(model);
         new LoginController(model,view);
 
-
+        /*VoiceThread thread = new VoiceThread(new JPanelOpenCV());
+        thread.run();*/
 
         /*Skype skype = new Skype();
         skype.init("kmlszelg98");

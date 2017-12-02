@@ -6,9 +6,12 @@ import Imap.Imap;
 import Imap.MessageImap;
 import Model.InboxModel;
 import Threads.CameraThread;
+import Threads.VoiceThread;
 import View.ImapView;
 import View.InboxReadView;
 import View.InboxView;
+import Wideo.Player;
+import com.sun.mail.imap.IMAPMessage;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,7 +35,6 @@ public class InboxController {
 
         view.getNext().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Next");
                 LoginController.thread.exit = true;
                 try {
                     Thread.sleep(1000);
@@ -54,13 +56,16 @@ public class InboxController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(model.getMessage());
+                    LoginController.voiceThread.start();
                 }
             }
         });
 
         view.getPrev().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Prev");
                 LoginController.thread.exit = true;
                 try {
                     Thread.sleep(1000);
@@ -82,6 +87,10 @@ public class InboxController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(model.getMessage());
+                    LoginController.voiceThread.start();
                 }
             }
         });
@@ -100,12 +109,14 @@ public class InboxController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
                 }
             }
         });
 
         view.getRead().addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 LoginController.thread.exit = true;
                 try {
@@ -118,6 +129,11 @@ public class InboxController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(model.getMessage());
+                    LoginController.voiceThread.setRead(true);
+                    LoginController.voiceThread.start();
                 }
             }
         });

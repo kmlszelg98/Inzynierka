@@ -9,6 +9,8 @@ import Wideo.JPanelOpenCV;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,6 +25,7 @@ public class MailView {
     private JButton logoutButton;
     private JPanelOpenCV panel;
     private JButton[][] buttons;
+    private String[][] btn;
 
     public MailView() {
         init();
@@ -34,13 +37,15 @@ public class MailView {
 
         panel = new JPanelOpenCV();
         buttons = new JButton[3][1];
+        btn = new String[3][1];
 
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
 
         JButton temp = new JButton();
-        //temp.setVisible(false);
         panel.add(temp);
+
+
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         double x = dim.getHeight()/5;
@@ -51,6 +56,7 @@ public class MailView {
         imapButton.setIcon(ViewHelper.setIcon("mail.png",(int)(x/2)));
         panel.add(imapButton);
         buttons[0][0] = imapButton;
+        btn[0][0]="/przyciski/Mail";
 
         skypeButton = new JButton("SKYPE");
         skypeButton.setFont(font.deriveFont(Font.BOLD));
@@ -58,24 +64,21 @@ public class MailView {
         skypeButton.setIcon(ViewHelper.setIcon("skype.png",(int)(x/2)));
         panel.add(skypeButton);
         buttons[1][0] = skypeButton;
+        btn[1][0] = "/przyciski/Skype";
 
         facebookButton = new JButton("FACEBOOK");
-        /*facebookButton.setBounds(300,(int)(x*2+x/2),(int) dim.getWidth()/2-200,(int)(x/2));
-        facebookButton.setFont(font.deriveFont(Font.BOLD));
-        facebookButton.setBackground(Color.WHITE);
-        facebookButton.setIcon(ViewHelper.setIcon("facebook.png",(int)(x/2)));
-        panel.add(facebookButton);*/
 
-        //(int) dim.getWidth()/2-200
         logoutButton = new JButton("WYLOGUJ");
         logoutButton.setFont(font.deriveFont(Font.BOLD));
         logoutButton.setBackground(Color.WHITE);
         logoutButton.setIcon(ViewHelper.setIcon("logout.png",(int)(x/3)));
         panel.add(logoutButton);
         buttons[2][0] = logoutButton;
+        btn[2][0] = "/przyciski/Wyloguj";
 
         setBounds();
         panel.setButtons(buttons);
+        panel.setBtn(btn);
 
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);

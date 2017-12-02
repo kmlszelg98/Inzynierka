@@ -29,10 +29,25 @@
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.15.1" level="project" />
     <orderEntry type="library" name="Maven: com.samczsun:skype4j:0.1.5" level="project" />
     <orderEntry type="library" name="Maven: net.htmlparser.jericho:jericho-html:3.1" level="project" />
+    <orderEntry type="library" name="Maven: javazoom:jlayer:1.0.1" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: sample:com.sample:1.0">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/src/main/jars/opencv-2413.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: com.optimaize.languagedetector:language-detector:0.6" level="project" />
+    <orderEntry type="library" name="Maven: net.arnx:jsonic:1.2.11" level="project" />
+    <orderEntry type="library" name="Maven: com.intellij:annotations:12.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.6" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: samples:com.samples:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/jars/voicerss_tts.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

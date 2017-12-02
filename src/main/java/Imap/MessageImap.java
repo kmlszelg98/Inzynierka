@@ -10,6 +10,7 @@ public class MessageImap {
     private String from;
     private String subject;
     private String body;
+    private String lang;
     private List<String> attachements;
 
     public String getFrom() {
@@ -34,6 +35,14 @@ public class MessageImap {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     public List<String> getAttachements() {

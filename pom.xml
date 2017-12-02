@@ -35,11 +35,28 @@
             <version>3.1</version>
         </dependency>
         <dependency>
+            <groupId>javazoom</groupId>
+            <artifactId>jlayer</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>sample</groupId>
             <artifactId>com.sample</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/jars/opencv-2413.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.optimaize.languagedetector</groupId>
+            <artifactId>language-detector</artifactId>
+            <version>0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>samples</groupId>
+            <artifactId>com.samples</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/jars/voicerss_tts.jar</systemPath>
         </dependency>
     </dependencies>
     

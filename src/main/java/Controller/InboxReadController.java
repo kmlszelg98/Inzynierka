@@ -2,6 +2,7 @@ package Controller;
 
 import Model.InboxModel;
 import Threads.CameraThread;
+import Threads.VoiceThread;
 import View.InboxReadView;
 import View.InboxView;
 
@@ -39,6 +40,9 @@ public class InboxReadController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.start();
                 }
             }
         });
@@ -58,6 +62,10 @@ public class InboxReadController {
                 if(LoginController.user.getType()==1){
                     LoginController.thread = new CameraThread(view.getPanel());
                     LoginController.thread.start();
+                } else if(LoginController.user.getType()==2){
+                    LoginController.voiceThread = new VoiceThread(view.getPanel());
+                    LoginController.voiceThread.setMsg(model.getMessage());
+                    LoginController.voiceThread.start();
                 }
             }
         });

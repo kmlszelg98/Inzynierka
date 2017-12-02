@@ -9,6 +9,7 @@ import Wideo.JPanelOpenCV;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Kamil on 11.10.2017.
@@ -23,6 +24,9 @@ public class InboxReadView {
     private String[] array;
     private JButton next;
     private JButton back;
+    private ArrayList<JButton> list;
+    private ArrayList<String> strList;
+
 
     public InboxReadView(InboxModel model){
         this.model=model;
@@ -76,9 +80,13 @@ public class InboxReadView {
     }
 
     public void init(){
+
+        list = new ArrayList<>();
+        strList = new ArrayList<>();
         panel = new JPanelOpenCV();
         panel.setLayout(null);
         panel.setBackground(Color.WHITE);
+
 
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
         Font font = new Font("Arial", Font.ITALIC, 40);
@@ -114,14 +122,34 @@ public class InboxReadView {
         next.setIcon(ViewHelper.setIcon("scroll.png",100));
         if(number>=(array.length)){
             next.setEnabled(false);
+        } else {
+            list.add(0,next);
+            strList.add("/przyciski/Przewiń");
         }
         panel.add(next);
+
 
         back = new JButton("WSTECZ");
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",100));
         panel.add(back);
+        list.add(back);
+        strList.add("/przyciski/Wstecz");
+
+        JButton buttons[][] = new JButton[list.size()][1];
+        for(int i=0;i<list.size();i++){
+            buttons[i][0] = list.get(i);
+        }
+
+
+        String[][] btn = new String[strList.size()][1];
+        for(int i=0;i<strList.size();i++){
+            btn[i][0] = strList.get(i);
+        }
+
+        panel.setButtons(buttons);
+        panel.setBtn(btn);
 
         setBounds();
         FrameHelper.frame.getContentPane().removeAll();

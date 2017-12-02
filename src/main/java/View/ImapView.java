@@ -20,6 +20,7 @@ public class ImapView {
     private JButton sentButton;
     private JButton backButton;
     private JButton[][] buttons;
+    private String[][] btn;
 
     public ImapView() {
         init();
@@ -29,6 +30,7 @@ public class ImapView {
     private void init() {
 
         buttons = new JButton[4][1];
+        btn = new String[4][1];
         Font font = new Font("Arial", Font.ITALIC, 40);
 
         panel = new JPanelOpenCV();
@@ -44,6 +46,7 @@ public class ImapView {
         inboxButton.setIcon(ViewHelper.setIcon("inbox.png",(int)(x/2)));
         panel.add(inboxButton);
         buttons[0][0] = inboxButton;
+        btn[0][0] = "/przyciski/Odczytaj";
 
         sendButton = new JButton("UTWÓRZ");
         sendButton.setFont(font.deriveFont(Font.BOLD));
@@ -51,6 +54,7 @@ public class ImapView {
         sendButton.setIcon(ViewHelper.setIcon("send.png",(int)(x/2)));
         panel.add(sendButton);
         buttons[1][0] = sendButton;
+        btn[1][0] = "/przyciski/Utwórz";
 
         sentButton = new JButton("WYSŁANE");
         sentButton.setFont(font.deriveFont(Font.BOLD));
@@ -58,6 +62,7 @@ public class ImapView {
         sentButton.setIcon(ViewHelper.setIcon("sent.png",(int)(x/2)));
         panel.add(sentButton);
         buttons[2][0] = sentButton;
+        btn[2][0] = "/przyciski/Wysłane";
 
         backButton = new JButton("WSTECZ");
         backButton.setFont(font.deriveFont(Font.BOLD));
@@ -65,8 +70,11 @@ public class ImapView {
         backButton.setIcon(ViewHelper.setIcon("return.png",(int)(x/2)));
         panel.add(backButton);
         buttons[3][0] =  backButton;
+        btn[3][0] = "/przyciski/Wstecz";
 
         panel.setButtons(buttons);
+        panel.setBtn(btn);
+
         setBounds();
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);

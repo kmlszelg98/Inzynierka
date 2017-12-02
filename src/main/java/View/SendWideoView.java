@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LoginController;
 import Helpers.FrameHelper;
 import Helpers.ViewHelper;
 import Model.SendMailModel;
@@ -27,6 +28,9 @@ public class SendWideoView {
     private JButton[][] buttons;
     private JButton[][] buttons2;
 
+    private String[][] btn;
+    private String[][] btn2;
+
     private JLabel bodyLabel;
     private JScrollPane pane;
     private Font font;
@@ -44,11 +48,19 @@ public class SendWideoView {
         for(int i=0;i<5;i++) buttons[i] = new JButton[7];
         buttons[5] = new JButton[3];
 
+        btn = new String[6][];
+        for(int i=0;i<5;i++) btn[i] = new String[8];
+        btn[5] = new String[4];
+
         buttons2 = new JButton[5][];
         for(int i=0;i<4;i++) buttons2[i] = new JButton[10];
         buttons2[4] = new JButton[3];
 
-       buttons2[4][0] = accept;
+        btn2 = new String[5][];
+        for(int i=0;i<4;i++) btn2[i] = new String[11];
+        btn2[4] = new String[4];
+
+        buttons2[4][0] = accept;
         buttons2[4][1] = cancel;
         buttons2[4][2] = abc;
 
@@ -70,7 +82,8 @@ public class SendWideoView {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         bodyLabel = new JLabel();
-        bodyLabel.setBounds((int)(dim.getWidth()/3),0,250,50);
+        if(LoginController.user.getType()==1) bodyLabel.setBounds((int)(dim.getWidth()/3),0,250,50);
+        else bodyLabel.setBounds(50,0,250,50);
         bodyLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(bodyLabel);
 
@@ -89,7 +102,8 @@ public class SendWideoView {
         body.setLineWrap(true);
 
         pane = new JScrollPane(body);
-        pane.setBounds((int)(dim.getWidth()/3),50,(int)(2*dim.getWidth()/3-100),(int)(dim.getHeight()-600));
+        if(LoginController.user.getType()==1) pane.setBounds((int)(dim.getWidth()/3),50,(int)(2*dim.getWidth()/3-100),(int)(dim.getHeight()-600));
+        else pane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-600));
         pane.setBorder(border);
         panel.add(pane);
 
@@ -130,11 +144,20 @@ public class SendWideoView {
         buttons[5][0] = accept;
         buttons[5][1] = cancel;
         buttons[5][2] = more;
+
+        btn[5][1] = "/przyciski/Akceptuj";
+        btn[5][2] = "/przyciski/Anuluj";
+        btn[5][3] = "/przyciski/Więcej";
         for(int i=0;i<buttons.length;i++){
             for(int j=0;j<buttons[i].length;j++) panel.add(buttons[i][j]);
         }
 
+        for(int i=0;i<btn.length;i++){
+            btn[i][0] = "/alfabet/alfabetG"+i;
+        }
+
         panel.setButtons(buttons);
+        panel.setBtn(btn);
 
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
@@ -164,10 +187,22 @@ public class SendWideoView {
         buttons2[4][0] = accept;
         buttons2[4][1] = cancel;
         buttons2[4][2] = abc;
+
+        btn2[4][1] = "/przyciski/Akceptuj";
+        btn2[4][2] = "/przyciski/Anuluj";
+        btn2[4][3] = "/przyciski/Alfabet";
+
         for(int i=0;i<buttons2.length;i++){
             for(int j=0;j<buttons2[i].length;j++) panel.add(buttons2[i][j]);
         }
+
+        for(int i=0;i<btn2.length;i++){
+            btn2[i][0] = "/alfabet/alfabetP"+i;
+        }
+
+
         panel.setButtons(buttons2);
+        panel.setBtn(btn2);
 
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
@@ -197,10 +232,21 @@ public class SendWideoView {
         buttons[5][0] = accept;
         buttons[5][1] = cancel;
         buttons[5][2] = more;
+
+        btn[5][1] = "/przyciski/Akceptuj";
+        btn[5][2] = "/przyciski/Anuluj";
+        btn[5][3] = "/przyciski/Więcej";
         for(int i=0;i<buttons.length;i++){
             for(int j=0;j<buttons[i].length;j++) panel.add(buttons[i][j]);
         }
+
+        for(int i=0;i<btn.length;i++){
+            btn[i][0] = "/alfabet/alfabetG"+i;
+        }
+
+
         panel.setButtons(buttons);
+        panel.setBtn(btn);
 
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
@@ -232,6 +278,7 @@ public class SendWideoView {
                 }
             });
             buttons[counter][k] = button;
+            btn[counter][k+1] = "/litery/litera"+alphabet[i];
         }
     }
 
@@ -258,6 +305,36 @@ public class SendWideoView {
             });
 
             buttons2[counter][k] = button;
+            switch (counter){
+                case 0:{
+                    btn2[counter][k+1] = "/cyfry/cyfra"+others[i];
+                    break;
+                }
+                case 1:{
+                    String tmp = others[i];
+                    if(tmp.equals("\"")) btn2[counter][k+1] = "/nawiasy/nawiasAp";
+                    else if (tmp.equals("<")) btn2[counter][k+1] = "/nawiasy/nawiasTo";
+                    else if (tmp.equals(">")) btn2[counter][k+1] = "/nawiasy/nawiasTz";
+                    else btn2[counter][k+1] = "/nawiasy/nawias"+tmp;
+                    break;
+                }
+                case 2:{
+                    String tmp = others[i];
+                    if(tmp.equals("*")) btn2[counter][k+1] = "/matematyczne/namtematyczneMn";
+                    else if(tmp.equals("/")) btn2[counter][k+1] = "/matematyczne/matematyczneDz";
+                    else btn2[counter][k+1] = "/matematyczne/matyematyczne"+tmp;
+                    break;
+                }
+                case 3:{
+                    String tmp = others[i];
+                    if(tmp.equals(":")) btn2[counter][k+1] = "/znaki/znakDw";
+                    else if (tmp.equals(".")) btn2[counter][k+1] = "/znaki/znakKr";
+                    else if (tmp.equals("?")) btn2[counter][k+1] = "/znaki/znakiPt";
+                    else if( tmp.equals(" ")) btn2[counter][k+1] = "/znaki/znakSp";
+                    else btn2[counter][k+1] = "/znaki/znak"+tmp;
+                    break;
+                }
+            }
         }
     }
 

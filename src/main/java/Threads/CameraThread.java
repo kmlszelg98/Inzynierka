@@ -76,7 +76,7 @@ public class CameraThread extends Thread {
 
 
 
-            /*if(!multi) {
+            if(!multi) {
                 if (faceDetections.toArray().length > 0) {
                     blink = false;
                     start = true;
@@ -117,7 +117,7 @@ public class CameraThread extends Thread {
                         }
                     }
                 }
-            }*/
+            }
 
             if(!multi) {
                 if (i % 10 == 0) {

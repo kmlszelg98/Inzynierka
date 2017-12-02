@@ -1,6 +1,16 @@
 package Imap;
 
 import Threads.ImapMessageThread;
+import com.google.common.base.Optional;
+import com.optimaize.langdetect.LanguageDetector;
+import com.optimaize.langdetect.LanguageDetectorBuilder;
+import com.optimaize.langdetect.i18n.LdLocale;
+import com.optimaize.langdetect.ngram.NgramExtractors;
+import com.optimaize.langdetect.profiles.LanguageProfile;
+import com.optimaize.langdetect.profiles.LanguageProfileReader;
+import com.optimaize.langdetect.text.CommonTextObjectFactories;
+import com.optimaize.langdetect.text.TextObject;
+import com.optimaize.langdetect.text.TextObjectFactory;
 import net.htmlparser.jericho.Source;
 
 import javax.activation.DataHandler;
@@ -71,7 +81,8 @@ public class Imap
     public MessageImap init (Message message) throws MessagingException, IOException {
         MessageImap messageImap = new MessageImap();
         messageImap.setSubject(message.getSubject());
-        messageImap.setFrom(message.getFrom()[0].toString());
+        if(type==0) messageImap.setFrom(message.getFrom()[0].toString());
+        else messageImap.setFrom(message.getAllRecipients()[0].toString());
         List<String> attachements = new ArrayList<String>();
         Multipart multipart;
         String temp = "";
@@ -82,6 +93,19 @@ public class Imap
             e.printStackTrace();
         }
         messageImap.setBody(builder.toString());
+
+        List<LanguageProfile> languageProfiles = new LanguageProfileReader().readAllBuiltIn();
+        LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+                .withProfiles(languageProfiles)
+                .build();
+        TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+        TextObject textObject = textObjectFactory.forText(builder.toString());
+        Optional<LdLocale> lang = languageDetector.detect(textObject);
+        if(lang.isPresent()) {
+            LdLocale locale = lang.get();
+            messageImap.setLang(locale.getLanguage());
+        } else messageImap.setLang("pl");
+
         //messageImap.setAttachements(attachements);
         return messageImap;
     }
