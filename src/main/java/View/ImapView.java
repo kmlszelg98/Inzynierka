@@ -19,6 +19,7 @@ public class ImapView {
     private JButton sendButton;
     private JButton sentButton;
     private JButton backButton;
+    private JButton stopButton;
     private JButton[][] buttons;
     private String[][] btn;
 
@@ -29,7 +30,7 @@ public class ImapView {
 
     private void init() {
 
-        buttons = new JButton[4][1];
+        buttons = new JButton[5][1];
         btn = new String[4][1];
         Font font = new Font("Arial", Font.ITALIC, 40);
 
@@ -72,6 +73,12 @@ public class ImapView {
         buttons[3][0] =  backButton;
         btn[3][0] = "/przyciski/Wstecz";
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
+        buttons[4][0] = stopButton;
+
         panel.setButtons(buttons);
         panel.setBtn(btn);
 
@@ -94,12 +101,18 @@ public class ImapView {
             sentButton.setBounds(300, (int) (x * 2 + x / 2), (int) dim.getWidth() / 2 - 200, (int) (x / 2));
             backButton.setBounds((int) (dim.getWidth() / 2 - 200), (int) (x * 3 + x / 2), (int) dim.getWidth() / 2 - 200, (int) (x / 2));
         } else {
-            inboxButton.setBounds((int) (dim.getWidth() / 3), (int) (x / 2), (int) dim.getWidth() / 2, (int) (x / 2));//300
-            sendButton.setBounds((int) (dim.getWidth() / 3), (int) (x + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
-            sentButton.setBounds((int) (dim.getWidth() / 3), (int) (x * 2 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
-            backButton.setBounds((int) (dim.getWidth() / 3), (int) (x * 3 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
+            inboxButton.setBounds((int) (dim.getWidth() / 3), (int) (x/2), (int) dim.getWidth() / 2, (int) (x / 2));//300
+            sendButton.setBounds((int) (dim.getWidth() / 3), (int) (3*x/4 + x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            sentButton.setBounds((int) (dim.getWidth() / 3), (int) (3*x/4 * 2 + x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            backButton.setBounds((int) (dim.getWidth() / 3), (int) (3*x/4 * 3 + x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            stopButton.setBounds((int) (dim.getWidth() / 3), (int) (3*x/4 * 4 + x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            panel.add(stopButton);
         }
 
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public JPanelOpenCV getPanel() {

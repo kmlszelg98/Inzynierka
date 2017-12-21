@@ -24,6 +24,7 @@ public class InboxReadView {
     private String[] array;
     private JButton next;
     private JButton back;
+    private JButton stopButton;
     private ArrayList<JButton> list;
     private ArrayList<String> strList;
 
@@ -50,7 +51,7 @@ public class InboxReadView {
             count = count -3;
         }
         int how = 0;
-        String temp = "";
+        StringBuilder temp = new StringBuilder();
         int limit = 0;
         for(int i=number;i<array.length;i++){
             int width = fm.stringWidth(array[i]);
@@ -61,13 +62,13 @@ public class InboxReadView {
                     number = number+limit;
                     break;
                 } else {
-                    temp += array[i];
+                    temp.append(array[i]);
                     limit++;
                 }
             }
             if(how+c<count){
-                if(how>0) temp+="\n";
-                temp += array[i];
+                if(how>0) temp.append("\n");
+                temp.append(array[i]);
                 how = how+c;
                 limit++;
                 if(i==array.length-1) number = number + limit;
@@ -76,7 +77,7 @@ public class InboxReadView {
                 break;
             }
         }
-        return temp;
+        return temp.toString();
     }
 
     public void init(){
@@ -137,6 +138,12 @@ public class InboxReadView {
         list.add(back);
         strList.add("/przyciski/Wstecz");
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",100));
+        list.add(stopButton);
+
         JButton buttons[][] = new JButton[list.size()][1];
         for(int i=0;i<list.size();i++){
             buttons[i][0] = list.get(i);
@@ -162,14 +169,21 @@ public class InboxReadView {
         return panel;
     }
 
+    public JButton getStopButton() {
+        return stopButton;
+    }
+
     public void setBounds(){
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         double w = dim.getWidth()/2-200;
 
         if(LoginController.user.getType()==1){
+            w= dim.getWidth()/3-100;
             bodyPane.setBounds((int)(dim.getWidth()/3),50,(int)(2*dim.getWidth()/3-100),(int)(dim.getHeight()-300));
             next.setBounds(100,(int)(dim.getHeight()-200),(int)w,100);
-            back.setBounds((int)(dim.getWidth()/2+100),(int)(dim.getHeight()-200),(int)w,100);
+            back.setBounds((int)(2*dim.getWidth()/3+50),(int)(dim.getHeight()-200),(int)w,100);
+            stopButton.setBounds((int)(dim.getWidth()/3+75),(int)(dim.getHeight()-200),(int)w,100);
+            panel.add(stopButton);
         } else {
             bodyPane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
             next.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-400),(int)w,100);

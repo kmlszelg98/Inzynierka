@@ -43,81 +43,85 @@ public class MailController {
         /*WindowHelper helper = new WindowHelper();
         helper.closeWindow(FrameHelper.frame);*/
 
-        view.getFacebookButton().addActionListener(new ActionListener() {
+        view.getFacebookButton().addActionListener(e -> {
 
-            public void actionPerformed(ActionEvent e) {
-
-            }
         });
 
-        view.getImapButton().addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if(LoginController.user.getType()==1) {
-                    LoginController.thread.exit = true;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e2) {
-                        e2.printStackTrace();
-                    }
-                    ImapView view = new ImapView();
-                    new ImapController(view);
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                } else if(LoginController.user.getType()==2){
-                    ImapView view = new ImapView();
-                    new ImapController(view);
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.start();
-                } else {
-                    ImapView view = new ImapView();
-                    new ImapController(view);
-                }
-            }
-        });
-
-        view.getSkypeButton().addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if(LoginController.user.getType()==1) {
-                    LoginController.thread.exit = true;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e2) {
-                        e2.printStackTrace();
-                    }
-                }
-                Skype skype = new Skype();
-                skype.init(LoginController.user.getSkypeName());
-                Skype.number = 0;
-                SkypeChatsModel model = new SkypeChatsModel(Skype.get());
-                SkypeChatsView view = new SkypeChatsView(model);
-                new SkypeChatsController(view,model);
-                if(LoginController.user.getType()==1){
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                } else if(LoginController.user.getType()==2){
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.setMessage("Chat : "+model.getChat().getChatName());
-                    LoginController.voiceThread.start();
-                }
-            }
-        });
-
-        view.getLogoutButton().addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        view.getImapButton().addActionListener(e -> {
+            if(LoginController.user.getType()==1) {
                 LoginController.thread.exit = true;
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e2) {
                     e2.printStackTrace();
                 }
-                FrameHelper.frame.dispose();
-                LoginModel model = new LoginModel();
-                LoginView view = new LoginView(model);
-                new LoginController(model,view);
+                ImapView view = new ImapView();
+                new ImapController(view);
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            } else if(LoginController.user.getType()==2){
+                ImapView view = new ImapView();
+                new ImapController(view);
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.start();
+            } else {
+                ImapView view = new ImapView();
+                new ImapController(view);
             }
+        });
+
+        view.getSkypeButton().addActionListener(e -> {
+            if(LoginController.user.getType()==1) {
+                LoginController.thread.exit = true;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            Skype skype = new Skype();
+            skype.init(LoginController.user.getSkypeName());
+            Skype.number = 0;
+            SkypeChatsModel model = new SkypeChatsModel(Skype.get());
+            SkypeChatsView view = new SkypeChatsView(model);
+            new SkypeChatsController(view,model);
+            if(LoginController.user.getType()==1){
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            } else if(LoginController.user.getType()==2){
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.setMessage("Chat : "+model.getChat().getChatName());
+                LoginController.voiceThread.start();
+            }
+        });
+
+        view.getLogoutButton().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            FrameHelper.frame.dispose();
+            LoginModel model = new LoginModel();
+            LoginView view = new LoginView(model);
+            new LoginController(model,view);
+        });
+
+        view.getStopButton().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            LoginController.thread = new CameraThread(view.getPanel());
+            LoginController.thread.start();
         });
     }
 

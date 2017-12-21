@@ -23,6 +23,7 @@ public class MailView {
     private JButton skypeButton;
     private JButton facebookButton;
     private JButton logoutButton;
+    private JButton stopButton;
     private JPanelOpenCV panel;
     private JButton[][] buttons;
     private String[][] btn;
@@ -36,7 +37,7 @@ public class MailView {
         Font font = new Font("Arial", Font.ITALIC, 40);
 
         panel = new JPanelOpenCV();
-        buttons = new JButton[3][1];
+        buttons = new JButton[4][1];
         btn = new String[3][1];
 
         panel.setLayout(null);
@@ -48,7 +49,9 @@ public class MailView {
 
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        double x = dim.getHeight()/5;
+
+        double x;
+        x = dim.getHeight()/5;
 
         imapButton = new JButton("MAIL");
         imapButton.setFont(font.deriveFont(Font.BOLD));
@@ -76,6 +79,13 @@ public class MailView {
         buttons[2][0] = logoutButton;
         btn[2][0] = "/przyciski/Wyloguj";
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
+        buttons[3][0] = stopButton;
+
+
         setBounds();
         panel.setButtons(buttons);
         panel.setBtn(btn);
@@ -89,25 +99,29 @@ public class MailView {
 
     private void setBounds(){
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        double x = dim.getHeight()/5;
+        double x;
+        x = dim.getHeight()/5;
 
         if(LoginController.user.getType()!=1) {
             imapButton.setBounds((int) (dim.getWidth() / 4), (int) (x / 2), (int) dim.getWidth() / 2, (int) (x / 2));//300
             skypeButton.setBounds((int) (dim.getWidth() / 4), (int) (x + x / 2 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
             logoutButton.setBounds((int) (dim.getWidth() / 4), (int) (x * 3 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
-        } else {
+        } else{
             imapButton.setBounds((int) (dim.getWidth() / 3), (int) (x / 2), (int) dim.getWidth() / 2, (int) (x / 2));//300
-            skypeButton.setBounds((int) (dim.getWidth() / 3), (int) (x + x / 2 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
-            logoutButton.setBounds((int) (dim.getWidth() / 3), (int) (x * 3 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
+            skypeButton.setBounds((int) (dim.getWidth() / 3), (int) (x + x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            logoutButton.setBounds((int) (dim.getWidth() / 3), (int) (x * 2 + x / 2), (int) dim.getWidth() / 2, (int) (x / 2));
+            stopButton.setBounds((int) (dim.getWidth() / 3), (int) (x*3+x/2), (int) dim.getWidth() / 2, (int) (x / 2));
+            panel.add(stopButton);
         }
-
         /*CameraThread thread = new CameraThread(panel);
         thread.run();*/
-
 
     }
 
 
+    public JButton getStopButton() {
+        return stopButton;
+    }
 
     public JPanelOpenCV getPanel() {
         return panel;

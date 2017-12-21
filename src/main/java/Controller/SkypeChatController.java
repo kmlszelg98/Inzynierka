@@ -30,98 +30,102 @@ public class SkypeChatController {
 
     public void setListeners(){
 
-        view.getNext().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoginController.thread.exit = true;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e2) {
-                    e2.printStackTrace();
-                }
-                model.next();
-                view.init();
-                new SkypeChatController(model,view);
-                if(LoginController.user.getType()==1){
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                } else if(LoginController.user.getType()==2){
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.setMessage("Wiadomość od "+model.getMessage().getAuthor()+". Treść "
-                            +model.getMessage().getBody().replaceAll("\\<.*?\\>",""));
-                    LoginController.voiceThread.start();
-                }
+        view.getNext().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            model.next();
+            view.init();
+            new SkypeChatController(model,view);
+            if(LoginController.user.getType()==1){
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            } else if(LoginController.user.getType()==2){
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.setMessage("Wiadomość od "+model.getMessage().getAuthor()+". Treść "
+                        +model.getMessage().getBody().replaceAll("\\<.*?\\>",""));
+                LoginController.voiceThread.start();
             }
         });
 
-        view.getPrev().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoginController.thread.exit = true;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e2) {
-                    e2.printStackTrace();
-                }
-                model.prev();
-                view.init();
-                new SkypeChatController(model,view);
-                if(LoginController.user.getType()==1){
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                }else if(LoginController.user.getType()==2){
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.setMessage("Wiadomość od "+model.getMessage().getAuthor()+". Treść "
-                            +model.getMessage().getBody().replaceAll("\\<.*?\\>",""));
-                    LoginController.voiceThread.start();
-                }
+        view.getPrev().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            model.prev();
+            view.init();
+            new SkypeChatController(model,view);
+            if(LoginController.user.getType()==1){
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            }else if(LoginController.user.getType()==2){
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.setMessage("Wiadomość od "+model.getMessage().getAuthor()+". Treść "
+                        +model.getMessage().getBody().replaceAll("\\<.*?\\>",""));
+                LoginController.voiceThread.start();
             }
         });
 
-        view.getBack().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoginController.thread.exit = true;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e2) {
-                    e2.printStackTrace();
-                }
-                SkypeChatsModel model = new SkypeChatsModel(Skype.get());
-                SkypeChatsView view = new SkypeChatsView(model);
-                new SkypeChatsController(view,model);
-                if(LoginController.user.getType()==1){
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                }else if(LoginController.user.getType()==2){
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.setMessage("Chat: "+model.getChat().getChatName());
-                    LoginController.voiceThread.start();
-                }
+        view.getBack().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            SkypeChatsModel model = new SkypeChatsModel(Skype.get());
+            SkypeChatsView view = new SkypeChatsView(model);
+            new SkypeChatsController(view,model);
+            if(LoginController.user.getType()==1){
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            }else if(LoginController.user.getType()==2){
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.setMessage("Chat: "+model.getChat().getChatName());
+                LoginController.voiceThread.start();
             }
         });
 
-        view.getReply().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LoginController.thread.exit = true;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e2) {
-                    e2.printStackTrace();
-                }
-                SkypeSendModel model2 = new SkypeSendModel(model.getChat().getChatName());
-                SkypeSendView view = new SkypeSendView(model2);
-                new SkypeSendController(model2,view);
-                if(LoginController.user.getType()==1){
-                    LoginController.thread = new CameraThread(view.getPanel());
-                    LoginController.thread.start();
-                } else if(LoginController.user.getType()==2){
-                    LoginController.voiceThread = new VoiceThread(view.getPanel());
-                    LoginController.voiceThread.start();
-                }
-
+        view.getReply().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
             }
+            SkypeSendModel model2 = new SkypeSendModel(model.getChat().getChatName());
+            SkypeSendView view = new SkypeSendView(model2);
+            new SkypeSendController(model2,view);
+            if(LoginController.user.getType()==1){
+                LoginController.thread = new CameraThread(view.getPanel());
+                LoginController.thread.start();
+            } else if(LoginController.user.getType()==2){
+                LoginController.voiceThread = new VoiceThread(view.getPanel());
+                LoginController.voiceThread.start();
+            }
+
+        });
+
+        view.getStopButton().addActionListener(e -> {
+            LoginController.thread.exit = true;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e2) {
+                e2.printStackTrace();
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            LoginController.thread = new CameraThread(view.getPanel());
+            LoginController.thread.start();
         });
     }
 }

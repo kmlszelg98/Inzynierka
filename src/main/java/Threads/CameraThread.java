@@ -58,7 +58,7 @@ public class CameraThread extends Thread {
     @Override
     public void run(){
         CascadeClassifier Detector = new CascadeClassifier();
-        Detector.load("C:\\Users\\Kamil\\Desktop\\opencv\\opencv\\sources\\data\\haarcascades_cuda\\haarcascade_eye_tree_eyeglasses.xml");
+        Detector.load("src\\main\\jars\\haarcascade_eye_tree_eyeglasses.xml");
 
         camera.read(frame);
         boolean blink = false;

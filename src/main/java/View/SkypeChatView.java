@@ -25,6 +25,7 @@ public class SkypeChatView {
     private JButton scroll;
     private JButton reply;
     private JButton back;
+    private JButton stopButton;
     private ArrayList<JButton> list;
     private ArrayList<String> list2;
 
@@ -105,6 +106,12 @@ public class SkypeChatView {
         list.add(back);
         list2.add("/przyciski/Wstecz");
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",100));
+        list.add(stopButton);
+
         next = new JButton("NASTĘPNY");
         next.setBounds((int)(50+2*w+w/16),(int)(dim.getHeight()-400),(int)(w/2+w/4+w/8),100);
         next.setFont(font.deriveFont(Font.BOLD));
@@ -133,11 +140,14 @@ public class SkypeChatView {
 
         if(LoginController.user.getType()==1){
             double x2 = (dim.getHeight()-600)/3;
-            double w2 = dim.getWidth()/2-200;
-            next.setBounds((int)(dim.getWidth()/2+100),(int)(450 + x2+ x2/2),(int)w2,(int)(x2/2));
-            prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w2,(int)(x2/2));
-            back.setBounds((int)(dim.getWidth()/2+100),(int)(450 +x2*2 + x2/2),(int)w2,(int)(x2/2));
-            reply.setBounds(100,(int)(450 +x2*2 + x2/2),(int)w2,(int)(x2/2));
+
+            w= dim.getWidth()/3-100;
+            reply.setBounds(100,(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
+            next.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            back.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
+            stopButton.setBounds((int)(dim.getWidth()/3+75),(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
+            panel.add(stopButton);
         }
 
         JButton buttons[][] = new JButton[list.size()][1];
@@ -158,6 +168,11 @@ public class SkypeChatView {
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
+    }
+
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public JPanelOpenCV getPanel() {

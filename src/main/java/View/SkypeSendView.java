@@ -24,6 +24,7 @@ public class SkypeSendView {
     private JButton cancel;
     private JButton more;
     private JButton abc;
+    private JButton stopButton;
     private JButton[][] buttons;
     private JButton[][]buttons2;
     private String[][] btn;
@@ -42,7 +43,7 @@ public class SkypeSendView {
 
         buttons = new JButton[6][];
         for(int i=0;i<5;i++) buttons[i] = new JButton[7];
-        buttons[5] = new JButton[3];
+        buttons[5] = new JButton[4];
 
         btn = new String[6][];
         for(int i=0;i<5;i++) btn[i] = new String[8];
@@ -50,7 +51,7 @@ public class SkypeSendView {
 
         buttons2 = new JButton[5][];
         for(int i=0;i<4;i++) buttons2[i] = new JButton[10];
-        buttons2[4] = new JButton[3];
+        buttons2[4] = new JButton[4];
 
         btn2 = new String[5][];
         for(int i=0;i<4;i++) btn2[i] = new String[11];
@@ -139,12 +140,20 @@ public class SkypeSendView {
         abc.setBackground(Color.WHITE);
         abc.setIcon(ViewHelper.setIcon("abc.png",50));
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",50));
+
+
+
         if(LoginController.user.getType()>=1) {
             buttons[5][0] = accept;
             buttons[5][1] = cancel;
             buttons[5][2] = more;
-            for (int i = 0; i < buttons.length; i++) {
-                for (int j = 0; j < buttons[i].length; j++) panel.add(buttons[i][j]);
+            buttons[5][3] = stopButton;
+            for (JButton[] button : buttons) {
+                for (JButton aButton : button) panel.add(aButton);
             }
 
             btn[5][1] = "/przyciski/Akceptuj";
@@ -160,10 +169,33 @@ public class SkypeSendView {
             panel.add(more);
         }
 
+        if(LoginController.user.getType()!=0) setBounds();
+
         FrameHelper.frame.getContentPane().removeAll();
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
+    }
+
+    public void setBounds(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        int pos = (int)(dim.getHeight()-525);
+        double wdth = dim.getWidth()/3-100;
+
+        if(LoginController.user.getType()!=1) {
+            accept.setBounds(50, pos + 5 * 75, (int) wdth, 50);
+            cancel.setBounds((int) dim.getWidth() / 3 + 50, pos + 5 * 75, (int) wdth, 50);
+            more.setBounds((int) (2 * dim.getWidth() / 3) + 50, pos + 5 * 75, (int) wdth, 50);
+            abc.setBounds((int) (2 * dim.getWidth() / 3) + 50, pos + 5 * 75, (int) wdth, 50);
+        } else {
+            wdth = dim.getWidth()/4-100;
+            accept.setBounds(50, pos + 5 * 75, (int) wdth, 50);
+            cancel.setBounds((int) dim.getWidth()/4 + 50, pos + 5 * 75, (int) wdth, 50);
+            more.setBounds((int) (2 * dim.getWidth()/4) + 50, pos + 5 * 75, (int) wdth, 50);
+            abc.setBounds((int) (2 * dim.getWidth()/4) + 50, pos + 5 * 75, (int) wdth, 50);
+            stopButton.setBounds((int) (3 * dim.getWidth()/4) + 50, pos + 5 * 75, (int) wdth, 50);
+            panel.add(stopButton);
+        }
     }
 
     public void addButtons(int size, int pos){
@@ -181,12 +213,7 @@ public class SkypeSendView {
             button.setFont(font.deriveFont(Font.BOLD));
             button.setBackground(Color.WHITE);
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    body.setText(body.getText()+alphabet[l]);
-                }
-            });
+            button.addActionListener(e -> body.setText(body.getText()+alphabet[l]));
             buttons[counter][k] = button;
             btn[counter][k+1] = "/litery/litera"+alphabet[i];
         }
@@ -207,12 +234,7 @@ public class SkypeSendView {
             button.setFont(font.deriveFont(Font.BOLD));
             button.setBackground(Color.WHITE);
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    body.setText(body.getText()+others[l]);
-                }
-            });
+            button.addActionListener(e -> body.setText(body.getText()+others[l]));
 
             buttons2[counter][k] = button;
             switch (counter){
@@ -222,26 +244,56 @@ public class SkypeSendView {
                 }
                 case 1:{
                     String tmp = others[i];
-                    if(tmp.equals("\"")) btn2[counter][k+1] = "/nawiasy/nawiasAp";
-                    else if (tmp.equals("<")) btn2[counter][k+1] = "/nawiasy/nawiasTo";
-                    else if (tmp.equals(">")) btn2[counter][k+1] = "/nawiasy/nawiasTz";
-                    else btn2[counter][k+1] = "/nawiasy/nawias"+tmp;
+                    switch (tmp) {
+                        case "\"":
+                            btn2[counter][k + 1] = "/nawiasy/nawiasAp";
+                            break;
+                        case "<":
+                            btn2[counter][k + 1] = "/nawiasy/nawiasTo";
+                            break;
+                        case ">":
+                            btn2[counter][k + 1] = "/nawiasy/nawiasTz";
+                            break;
+                        default:
+                            btn2[counter][k + 1] = "/nawiasy/nawias" + tmp;
+                            break;
+                    }
                     break;
                 }
                 case 2:{
                     String tmp = others[i];
-                    if(tmp.equals("*")) btn2[counter][k+1] = "/matematyczne/namtematyczneMn";
-                    else if(tmp.equals("/")) btn2[counter][k+1] = "/matematyczne/matematyczneDz";
-                    else btn2[counter][k+1] = "/matematyczne/matyematyczne"+tmp;
+                    switch (tmp) {
+                        case "*":
+                            btn2[counter][k + 1] = "/matematyczne/namtematyczneMn";
+                            break;
+                        case "/":
+                            btn2[counter][k + 1] = "/matematyczne/matematyczneDz";
+                            break;
+                        default:
+                            btn2[counter][k + 1] = "/matematyczne/matyematyczne" + tmp;
+                            break;
+                    }
                     break;
                 }
                 case 3:{
                     String tmp = others[i];
-                    if(tmp.equals(":")) btn2[counter][k+1] = "/znaki/znakDw";
-                    else if (tmp.equals(".")) btn2[counter][k+1] = "/znaki/znakKr";
-                    else if (tmp.equals("?")) btn2[counter][k+1] = "/znaki/znakiPt";
-                    else if( tmp.equals(" ")) btn2[counter][k+1] = "/znaki/znakSp";
-                    else btn2[counter][k+1] = "/znaki/znak"+tmp;
+                    switch (tmp) {
+                        case ":":
+                            btn2[counter][k + 1] = "/znaki/znakDw";
+                            break;
+                        case ".":
+                            btn2[counter][k + 1] = "/znaki/znakKr";
+                            break;
+                        case "?":
+                            btn2[counter][k + 1] = "/znaki/znakiPt";
+                            break;
+                        case " ":
+                            btn2[counter][k + 1] = "/znaki/znakSp";
+                            break;
+                        default:
+                            btn2[counter][k + 1] = "/znaki/znak" + tmp;
+                            break;
+                    }
                     break;
                 }
             }
@@ -269,8 +321,9 @@ public class SkypeSendView {
         buttons2[4][0] = accept;
         buttons2[4][1] = cancel;
         buttons2[4][2] = abc;
-        for(int i=0;i<buttons2.length;i++){
-            for(int j=0;j<buttons2[i].length;j++) panel.add(buttons2[i][j]);
+        buttons2[4][3] = stopButton;
+        for (JButton[] aButtons2 : buttons2) {
+            for (JButton anAButtons2 : aButtons2) panel.add(anAButtons2);
         }
         panel.setButtons(buttons2);
 
@@ -311,8 +364,9 @@ public class SkypeSendView {
         buttons[5][0] = accept;
         buttons[5][1] = cancel;
         buttons[5][2] = more;
-        for(int i=0;i<buttons.length;i++){
-            for(int j=0;j<buttons[i].length;j++) panel.add(buttons[i][j]);
+        buttons[5][3] = stopButton;
+        for (JButton[] button : buttons) {
+            for (JButton aButton : button) panel.add(aButton);
         }
         panel.setButtons(buttons);
 
@@ -328,6 +382,10 @@ public class SkypeSendView {
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public void update(){

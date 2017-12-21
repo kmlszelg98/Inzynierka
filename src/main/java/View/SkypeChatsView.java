@@ -26,6 +26,7 @@ public class SkypeChatsView {
     private JButton prev;
     private JButton read;
     private JButton back;
+    private JButton stopButton;
     private ArrayList<JButton> list;
     private ArrayList<String> list2;
 
@@ -75,7 +76,6 @@ public class SkypeChatsView {
 
 
         read = new JButton("CHAT");
-        read.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 + x2/2),(int)w,(int)(x2/2));
         read.setFont(font.deriveFont(Font.BOLD));
         read.setBackground(Color.WHITE);
         read.setIcon(ViewHelper.setIcon("chat.png",(int)(x2/2.5)));
@@ -84,7 +84,6 @@ public class SkypeChatsView {
         list2.add("/przyciski/Chat");
 
         back = new JButton("WSTECZ");
-        back.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",(int)(x2/2)));
@@ -92,8 +91,13 @@ public class SkypeChatsView {
         list.add(back);
         list2.add("/przyciski/Wstecz");
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
+        list.add(stopButton);
+
         next = new JButton("NASTĘPNY");
-        next.setBounds((int)(dim.getWidth()/2+100),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));
@@ -106,7 +110,6 @@ public class SkypeChatsView {
         panel.add(next);
 
         prev = new JButton("POPRZEDNI");
-        prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
         prev.setFont(font.deriveFont(Font.BOLD));
         prev.setBackground(Color.WHITE);
         prev.setIcon(ViewHelper.setIcon("prev.png",(int)(x2/2)));
@@ -125,6 +128,8 @@ public class SkypeChatsView {
             read.setBounds(100,(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
         }
 
+        setBounds();
+
         JButton buttons[][] = new JButton[list.size()][1];
         for(int i=0;i<list.size();i++){
             buttons[i][0] = list.get(i);
@@ -142,6 +147,28 @@ public class SkypeChatsView {
         FrameHelper.frame.getContentPane().add(panel);
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
+    }
+
+    public void setBounds(){
+        double x2 = (dim.getHeight()-600)/3;
+        double w = dim.getWidth()/2-200;
+
+        if(LoginController.user.getType()==1) {
+            w= dim.getWidth()/3-100;
+            read.setBounds(100,(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
+            next.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            back.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
+            stopButton.setBounds((int)(dim.getWidth()/3+75),(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
+            panel.add(stopButton);
+
+        } else {
+            read.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 + x2/2),(int)w,(int)(x2/2));
+            next.setBounds((int)(dim.getWidth()/2+100),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            back.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
+        }
+
     }
 
     public void update(){
@@ -190,6 +217,10 @@ public class SkypeChatsView {
         FrameHelper.frame.revalidate();
         FrameHelper.frame.repaint();
 
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public JPanelOpenCV getPanel() {

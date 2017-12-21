@@ -36,14 +36,14 @@ public class SkypeConnection {
         } catch (InvalidCredentialsException e){
             e.printStackTrace();
         } catch (ConnectionException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         //skype.getEventDispatcher().registerListener(new SkypeListener(list));
         try {
             skype.subscribe();
         } catch (ConnectionException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         /*try {
             skype.loadMoreChats(10);

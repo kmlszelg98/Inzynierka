@@ -1,5 +1,6 @@
 package Imap;
 
+import Controller.LoginController;
 import Threads.ImapMessageThread;
 import com.google.common.base.Optional;
 import com.optimaize.langdetect.LanguageDetector;
@@ -54,7 +55,7 @@ public class Imap
 
         //check if the content is plain text
         if (p.isMimeType("text/plain")) {
-            builder.append((String)"\n");
+            builder.append("\n");
             builder.append((String) p.getContent());
         }
         //check if the content has attachment
@@ -83,7 +84,7 @@ public class Imap
         messageImap.setSubject(message.getSubject());
         if(type==0) messageImap.setFrom(message.getFrom()[0].toString());
         else messageImap.setFrom(message.getAllRecipients()[0].toString());
-        List<String> attachements = new ArrayList<String>();
+        List<String> attachements = new ArrayList<>();
         Multipart multipart;
         String temp = "";
         StringBuilder builder = new StringBuilder();
@@ -94,18 +95,20 @@ public class Imap
         }
         messageImap.setBody(builder.toString());
 
-        List<LanguageProfile> languageProfiles = new LanguageProfileReader().readAllBuiltIn();
-        LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
-                .withProfiles(languageProfiles)
-                .build();
-        TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
-        TextObject textObject = textObjectFactory.forText(builder.toString());
-        Optional<LdLocale> lang = languageDetector.detect(textObject);
-        if(lang.isPresent()) {
-            LdLocale locale = lang.get();
-            messageImap.setLang(locale.getLanguage());
-        } else messageImap.setLang("pl");
+        if(LoginController.user.getType()==2) {
+            List<LanguageProfile> languageProfiles = new LanguageProfileReader().readAllBuiltIn();
+            LanguageDetector languageDetector = LanguageDetectorBuilder.create(NgramExtractors.standard())
+                    .withProfiles(languageProfiles)
+                    .build();
+            TextObjectFactory textObjectFactory = CommonTextObjectFactories.forDetectingOnLargeText();
+            TextObject textObject = textObjectFactory.forText(builder.toString());
+            Optional<LdLocale> lang = languageDetector.detect(textObject);
+            if (lang.isPresent()) {
+                LdLocale locale = lang.get();
+                messageImap.setLang(locale.getLanguage());
+            } else messageImap.setLang("pl");
 
+        }
         //messageImap.setAttachements(attachements);
         return messageImap;
     }
@@ -186,24 +189,15 @@ public class Imap
 
     public static boolean isLast(boolean types){
         if(type==0) {
-            if (id == messages.length - 1){
-                return true;
-            }
-            else {
-                return false;
-            }
+            return id == messages.length - 1;
         } else {
-            if (id == sentMessages.length - 1) return true;
-            else return false;
+            return id == sentMessages.length - 1;
         }
 
     }
 
     public static boolean isFirst(){
-        if ( id == 1){
-            return true;
-        }
-        return false;
+        return id == 1;
     }
 
 

@@ -19,9 +19,9 @@ import java.util.Arrays;
 
 public class Main {
 
-    //private static final SessionFactory ourSessionFactory;
+    /*private static final SessionFactory ourSessionFactory;
 
-    /*static {
+    static {
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
@@ -30,10 +30,11 @@ public class Main {
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
-    }*/
+    }
 
-    /*public static Session getSession() throws HibernateException {
+    public static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
+
     }*/
 
     public static void main(String[] args) {

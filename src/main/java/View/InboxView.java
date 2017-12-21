@@ -24,6 +24,7 @@ public class InboxView {
     private JButton prev;
     private JButton read;
     private JButton back;
+    private JButton stopButton;
 
     private JScrollPane fromPane;
     private JScrollPane subjectPane;
@@ -94,6 +95,12 @@ public class InboxView {
         list.add(back);
         strList.add("/przyciski/Wstecz");
 
+        stopButton = new JButton("STOP");
+        stopButton.setFont(font.deriveFont(Font.BOLD));
+        stopButton.setBackground(Color.WHITE);
+        stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
+        list.add(stopButton);
+
 
         next = new JButton("NASTĘPNY");
         next.setFont(font.deriveFont(Font.BOLD));
@@ -158,6 +165,7 @@ public class InboxView {
         list = new ArrayList<>();
         list.add(read);
         list.add(back);
+        list.add(stopButton);
 
 
         strList = new ArrayList<>();
@@ -206,12 +214,16 @@ public class InboxView {
         double w = dim.getWidth()/2-200;
 
         if(LoginController.user.getType()==1) {
+            w= dim.getWidth()/3-100;
             fromPane.setBounds((int)(dim.getWidth()/3), 50, (int) (2*dim.getWidth()/3 - 100), 250);
             subjectPane.setBounds((int)(dim.getWidth()/3), 350, (int) (2*dim.getWidth()/3 - 100), 250);
             read.setBounds(100,(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
-            next.setBounds((int)(dim.getWidth()/2+100),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
+            next.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
             prev.setBounds(100,(int)(450 + x2+ x2/2),(int)w,(int)(x2/2));
-            back.setBounds((int)(dim.getWidth()/2+100),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
+            back.setBounds((int)(2*dim.getWidth()/3+50),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
+            stopButton.setBounds((int)(dim.getWidth()/3+75),(int)(450+ x2*2 + x2/2),(int)w,(int)(x2/2));
+            panel.add(stopButton);
+
         } else {
             fromPane.setBounds(50, 50, (int) (dim.getWidth() - 100), 200);
             subjectPane.setBounds(50, 300, (int) (dim.getWidth() - 100), 200);
@@ -221,6 +233,10 @@ public class InboxView {
             back.setBounds((int)(dim.getWidth()/2-w/2),(int)(450 +x2*2 + x2/2),(int)w,(int)(x2/2));
         }
 
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public JPanelOpenCV getPanel() {
