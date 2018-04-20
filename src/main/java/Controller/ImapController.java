@@ -127,6 +127,7 @@ public class ImapController {
                 e1.printStackTrace();
             }
             LoginController.thread = new CameraThread(view.getPanel());
+            LoginController.thread.setEmotions(true);
             LoginController.thread.start();
         });
     }

@@ -2,6 +2,8 @@ package Threads;
 
 import Controller.LoginController;
 import Controller.SkypeChatsController;
+import Emotions.IndicoApi;
+import Emotions.MSFaceApi;
 import Model.SkypeChatsModel;
 import Skype.Skype;
 import View.SkypeChatsView;
@@ -10,9 +12,13 @@ import org.opencv.core.*;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.objdetect.CascadeClassifier;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Created by Kamil on 03.11.2017.
@@ -25,6 +31,7 @@ public class CameraThread extends Thread {
     private JPanelOpenCV panel;
     private int size = 0;
     private int rowSize = 0;
+    private boolean isEmotions;
 
     public CameraThread(JPanelOpenCV panel) {
         super();
@@ -33,7 +40,7 @@ public class CameraThread extends Thread {
         frame = new Mat();
         this.panel = panel;
         this.size = panel.getLength();
-
+        isEmotions = false;
     }
 
     public static BufferedImage MatToBufferedImage(Mat frame) {
@@ -52,8 +59,9 @@ public class CameraThread extends Thread {
         return image;
     }
 
-
-
+    public void setEmotions(boolean emotions) {
+        isEmotions = emotions;
+    }
 
     @Override
     public void run(){
@@ -71,6 +79,22 @@ public class CameraThread extends Thread {
             MatOfRect faceDetections = new MatOfRect();
             if(!camera.isOpened()) break;
             if(!camera.read(frame)) break;
+            if(isEmotions){
+
+                BufferedImage image = MatToBufferedImage(frame);
+                try {
+                    File myFile = new File("./test.jpg");
+                    myFile.createNewFile();
+                    ImageIO.write(image, "jpg", new File("./test.jpg"));
+                    //MSFaceApi faceApi = new MSFaceApi();
+                    IndicoApi faceApi = new IndicoApi();
+                    faceApi.detect();
+                    isEmotions = false;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             Detector.detectMultiScale(frame, faceDetections);
             i++;
 
