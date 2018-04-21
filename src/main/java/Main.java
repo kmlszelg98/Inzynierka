@@ -1,44 +1,21 @@
 import Controller.LoginController;
-import Imap.MailSender;
 import Model.LoginModel;
-import Skype.Skype;
-import Skype.SkypeConn.SkypeConnection;
-import Threads.VoiceThread;
 import View.LoginView;
-import Wideo.JPanelOpenCV;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.opencv.core.Core;
+import org.apache.commons.lang.SystemUtils;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.Arrays;
+import java.io.File;
 
 public class Main {
 
-    /*private static final SessionFactory ourSessionFactory;
-
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
-
-            ourSessionFactory = configuration.buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
-    public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
-
-    }*/
-
     public static void main(String[] args) {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
+        String libName = "";
+        if (SystemUtils.IS_OS_WINDOWS) {
+            libName = "opencv_java2413.dll";
+        } else if (SystemUtils.IS_OS_LINUX) {
+            libName = "libopencv_java2413.so";
+        }
+        System.load(new File("./src/main/jars/".concat(libName)).getAbsolutePath());
 
         LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
