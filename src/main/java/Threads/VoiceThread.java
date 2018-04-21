@@ -21,7 +21,6 @@ public class VoiceThread extends Thread{
     private String message;
 
     public VoiceThread(JPanelOpenCV panel) {
-        MediaPlayer x;
         this.panel = panel;
         this.size = panel.getLengthVoice();
         this.read = false;
