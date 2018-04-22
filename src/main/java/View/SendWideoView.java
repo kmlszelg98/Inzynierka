@@ -127,7 +127,7 @@ public class SendWideoView {
         cancel.setIcon(ViewHelper.setIcon("cancel.png",50));
         panel.add(cancel);
 
-        more = new JButton("WIĘCEJ");
+        more = new JButton("WIECEJ");
         more.setFont(font.deriveFont(Font.BOLD));
         more.setBackground(Color.WHITE);
         more.setIcon(ViewHelper.setIcon("more.png",50));

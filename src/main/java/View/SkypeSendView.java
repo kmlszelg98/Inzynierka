@@ -127,7 +127,7 @@ public class SkypeSendView {
         cancel.setIcon(ViewHelper.setIcon("cancel.png",50));
         panel.add(cancel);
 
-        more = new JButton("WIĘCEJ");
+        more = new JButton("WIECEJ");
         more.setBounds((int)(2*dim.getWidth()/3)+50,pos+5*75,(int)wdth,50);
         more.setFont(font.deriveFont(Font.BOLD));
         more.setBackground(Color.WHITE);

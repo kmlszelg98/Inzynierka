@@ -117,7 +117,7 @@ public class InboxReadView {
 
         double w = dim.getWidth()/2-200;
 
-        next = new JButton("PRZEWIŃ");
+        next = new JButton("PRZEWIN");
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("scroll.png",100));

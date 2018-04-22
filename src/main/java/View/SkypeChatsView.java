@@ -97,7 +97,7 @@ public class SkypeChatsView {
         stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
         list.add(stopButton);
 
-        next = new JButton("NASTĘPNY");
+        next = new JButton("NASTEPNY");
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));

@@ -49,7 +49,7 @@ public class ImapView {
         buttons[0][0] = inboxButton;
         btn[0][0] = "/przyciski/Odczytaj";
 
-        sendButton = new JButton("UTWÓRZ");
+        sendButton = new JButton("UTWORZ");
         sendButton.setFont(font.deriveFont(Font.BOLD));
         sendButton.setBackground(Color.WHITE);
         sendButton.setIcon(ViewHelper.setIcon("send.png",(int)(x/2)));
@@ -57,7 +57,7 @@ public class ImapView {
         buttons[1][0] = sendButton;
         btn[1][0] = "/przyciski/Utwórz";
 
-        sentButton = new JButton("WYSŁANE");
+        sentButton = new JButton("WYSLANE");
         sentButton.setFont(font.deriveFont(Font.BOLD));
         sentButton.setBackground(Color.WHITE);
         sentButton.setIcon(ViewHelper.setIcon("sent.png",(int)(x/2)));
