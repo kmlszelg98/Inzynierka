@@ -138,7 +138,7 @@ public class Imap
                    break;
                 }
             }*/
-            Folder sentFolder = store.getFolder("[Gmail]/Wysłane");
+            Folder sentFolder = store.getFolder("[Gmail]/Wys\u0142ane");
             sentFolder.open(Folder.READ_ONLY);
             sentMessages = sentFolder.getMessages();
 

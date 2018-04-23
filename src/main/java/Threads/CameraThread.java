@@ -87,8 +87,8 @@ public class CameraThread extends Thread {
                     myFile.createNewFile();
                     ImageIO.write(image, "jpg", new File("./test.jpg"));
                     //MSFaceApi faceApi = new MSFaceApi();
-                    IndicoApi faceApi = new IndicoApi();
-                    faceApi.detect();
+                    //IndicoApi faceApi = new IndicoApi();
+                    //faceApi.detect();
                     isEmotions = false;
                 } catch (IOException e) {
                     e.printStackTrace();
