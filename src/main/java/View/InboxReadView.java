@@ -25,6 +25,7 @@ public class InboxReadView {
     private JButton next;
     private JButton back;
     private JButton stopButton;
+    private JButton message;
     private ArrayList<JButton> list;
     private ArrayList<String> strList;
 
@@ -41,6 +42,10 @@ public class InboxReadView {
 
     public JButton getBack() {
         return back;
+    }
+
+    public JButton getMessage() {
+        return message;
     }
 
     public String setValue(){
@@ -117,7 +122,7 @@ public class InboxReadView {
 
         double w = dim.getWidth()/2-200;
 
-        next = new JButton("PRZEWIN");
+        next = new JButton("SCROLL");
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("scroll.png",100));
@@ -130,7 +135,7 @@ public class InboxReadView {
         panel.add(next);
 
 
-        back = new JButton("WSTECZ");
+        back = new JButton("BACK");
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",100));
@@ -143,6 +148,13 @@ public class InboxReadView {
         stopButton.setBackground(Color.WHITE);
         stopButton.setIcon(ViewHelper.setIcon("stop.png",100));
         list.add(stopButton);
+
+        message = new JButton("REPLY");
+        message.setFont(font.deriveFont(Font.BOLD));
+        message.setBackground(Color.WHITE);
+        message.setIcon(ViewHelper.setIcon("reply.png",100));
+        panel.add(message);
+        list.add(message);
 
         JButton buttons[][] = new JButton[list.size()][1];
         for(int i=0;i<list.size();i++){
@@ -186,7 +198,8 @@ public class InboxReadView {
             panel.add(stopButton);
         } else {
             bodyPane.setBounds(50,50,(int)(dim.getWidth()-100),(int)(dim.getHeight()-500));
-            next.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-400),(int)w,100);
+            next.setBounds(50,(int)(dim.getHeight()-400),(int)w,100);
+            message.setBounds((int)(dim.getWidth()-50-w),(int)(dim.getHeight()-400),(int)w,100);
             back.setBounds((int)(dim.getWidth()/2-w/2),(int)(dim.getHeight()-250),(int)w,100);
         }
     }

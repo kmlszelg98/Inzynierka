@@ -72,7 +72,7 @@ public class SkypeSendView {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
         if(LoginController.user.getType()==0) {
-            JLabel bodyLabel = new JLabel("TREŚĆ : ");
+            JLabel bodyLabel = new JLabel("BODY : ");
             bodyLabel.setBounds(50, 50, 250, 50);
             bodyLabel.setFont(font.deriveFont(Font.BOLD));
             panel.add(bodyLabel);
@@ -105,7 +105,7 @@ public class SkypeSendView {
 
         double wdth = dim.getWidth()/3-100;
 
-        accept = new JButton("AKCEPTUJ");
+        accept = new JButton("ACCEPT");
         if(LoginController.user.getType()>=1) {
             accept.setBounds(50, pos + 5 * 75, (int) wdth, 50);
         } else {
@@ -116,7 +116,7 @@ public class SkypeSendView {
         accept.setIcon(ViewHelper.setIcon("checked.png",50));
         panel.add(accept);
 
-        cancel = new JButton("ANULUJ");
+        cancel = new JButton("CANCEL");
         if(LoginController.user.getType()>=1) {
             cancel.setBounds((int) dim.getWidth() / 3 + 50, pos + 5 * 75, (int) wdth, 50);
         } else {
@@ -127,14 +127,14 @@ public class SkypeSendView {
         cancel.setIcon(ViewHelper.setIcon("cancel.png",50));
         panel.add(cancel);
 
-        more = new JButton("WIECEJ");
+        more = new JButton("MORE");
         more.setBounds((int)(2*dim.getWidth()/3)+50,pos+5*75,(int)wdth,50);
         more.setFont(font.deriveFont(Font.BOLD));
         more.setBackground(Color.WHITE);
         more.setIcon(ViewHelper.setIcon("more.png",50));
 
 
-        abc = new JButton("LITERY");
+        abc = new JButton("LETTERS");
         abc.setBounds((int)(2*dim.getWidth()/3)+50,pos+5*75,(int)wdth,50);
         abc.setFont(font.deriveFont(Font.BOLD));
         abc.setBackground(Color.WHITE);

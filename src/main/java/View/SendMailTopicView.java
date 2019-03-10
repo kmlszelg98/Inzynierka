@@ -37,7 +37,7 @@ public class SendMailTopicView {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-        JLabel toLabel = new JLabel("DO: ");
+        JLabel toLabel = new JLabel("TO: ");
         toLabel.setBounds(50,50,150,50);
         toLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(toLabel);
@@ -54,8 +54,8 @@ public class SendMailTopicView {
         pane.setBorder(border);
         panel.add(pane);
 
-        JLabel subjectLabel = new JLabel("TEMAT :");
-        subjectLabel.setBounds(50,350,200,50);
+        JLabel subjectLabel = new JLabel("SUBJECT :");
+        subjectLabel.setBounds(50,350,300,50);
         subjectLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(subjectLabel);
 
@@ -78,14 +78,14 @@ public class SendMailTopicView {
         double h = dim.getHeight()-975;
         double w = dim.getWidth()/2-150;
 
-        accept = new JButton("AKCEPTUJ");
+        accept = new JButton("ACCEPT");
         accept.setBounds(100,750,(int)w,(int)h);
         accept.setFont(font.deriveFont(Font.BOLD));
         accept.setBackground(Color.WHITE);
         accept.setIcon(ViewHelper.setIcon("checked.png",(int)(h)));
         panel.add(accept);
 
-        cancel = new JButton("ANULUJ");
+        cancel = new JButton("CANCEL");
         cancel.setBounds((int)dim.getWidth()/2+50,750,(int)w,(int)h);
         cancel.setFont(font.deriveFont(Font.BOLD));
         cancel.setBackground(Color.WHITE);

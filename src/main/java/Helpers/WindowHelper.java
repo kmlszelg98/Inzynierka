@@ -19,8 +19,8 @@ public class WindowHelper {
                 UIManager.put("OptionPane.minimumSize",new Dimension(250,250));
                 UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 20));
                 UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 20));
-                Object options[] ={"Tak","Nie"};
-                if (JOptionPane.showOptionDialog(frame, "Zakończyć działanie programu ?",
+                Object options[] ={"Yes","No"};
+                if (JOptionPane.showOptionDialog(frame, "Are you sure ?",
                         null, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, options, options[1]) == JOptionPane.YES_OPTION){
 

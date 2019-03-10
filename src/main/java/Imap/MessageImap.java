@@ -13,6 +13,15 @@ public class MessageImap {
     private String lang;
     private List<String> attachements;
 
+    public MessageImap() {
+    }
+
+    public MessageImap(String from, String subject, String body) {
+        this.from = from;
+        this.subject = subject;
+        this.body = body;
+    }
+
     public String getFrom() {
         return from;
     }

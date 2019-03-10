@@ -35,7 +35,7 @@ public class SendMailBodyView {
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-        JLabel bodyLabel = new JLabel("TREŚĆ : ");
+        JLabel bodyLabel = new JLabel("BODY : ");
         bodyLabel.setBounds(50,50,250,50);
         bodyLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(bodyLabel);
@@ -53,14 +53,14 @@ public class SendMailBodyView {
         double h = dim.getHeight()-975;
         double w = dim.getWidth()/2-150;
 
-        accept = new JButton("AKCEPTUJ");
+        accept = new JButton("ACCEPT");
         accept.setBounds(100,750,(int)w,(int)h);
         accept.setFont(font.deriveFont(Font.BOLD));
         accept.setBackground(Color.WHITE);
         accept.setIcon(ViewHelper.setIcon("checked.png",(int)(h)));
         panel.add(accept);
 
-        cancel = new JButton("ANULUJ");
+        cancel = new JButton("CANCEL");
         cancel.setBounds((int)dim.getWidth()/2+50,750,(int)w,(int)h);
         cancel.setFont(font.deriveFont(Font.BOLD));
         cancel.setBackground(Color.WHITE);

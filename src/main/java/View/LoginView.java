@@ -15,7 +15,7 @@ public class LoginView {
     private JFrame mainFrame;
     private LoginModel model;
     private JTextField nameArea;
-    private JPasswordField passArea;
+    private JTextField passArea;//JPasswordField
     private JButton loginButton;
     private JButton registerButton;
     private JPanel panel;
@@ -41,7 +41,7 @@ public class LoginView {
         Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
         
 
-        JLabel nameLabel = new JLabel("NAZWA");
+        JLabel nameLabel = new JLabel("TYPE");
         nameLabel.setBounds(70,50,150,50);
         nameLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(nameLabel);
@@ -54,12 +54,12 @@ public class LoginView {
         nameArea.setBorder(border);
         panel.add(nameArea);
 
-        JLabel passLabel = new JLabel("HASLO");
+        JLabel passLabel = new JLabel("DETECT");
         passLabel.setBounds(70,150,150,50);
         passLabel.setFont(font.deriveFont(Font.BOLD));
         panel.add(passLabel);
 
-        passArea = new JPasswordField(model.getPassword());
+        passArea = new JTextField(model.getPassword());
         passArea.setBounds(270,160,230,30);
         passArea.setFont(font.deriveFont(Font.BOLD));
         passArea.setBackground(Color.LIGHT_GRAY);
@@ -67,12 +67,12 @@ public class LoginView {
         passArea.setBorder(border);
         panel.add(passArea);
 
-        loginButton= new JButton("LOGUJ");
+        loginButton= new JButton("LOGIN");
         loginButton.setBounds(50,280,200,50);
         loginButton.setFont(font.deriveFont(Font.BOLD));
         panel.add(loginButton);
 
-        registerButton= new JButton("REJESTRUJ");
+        registerButton= new JButton("TEST");
         registerButton.setBounds(350,280,200,50);
         registerButton.setFont(font.deriveFont(Font.BOLD));
         panel.add(registerButton);
@@ -93,7 +93,7 @@ public class LoginView {
 
     public void updateModel(){
         model.setName(nameArea.getText());
-        model.setPassword(String.valueOf(passArea.getPassword()));
+        model.setPassword(String.valueOf(passArea.getText()));//getPassword
     }
 
     public LoginModel getModel(){

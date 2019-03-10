@@ -88,7 +88,7 @@ public class SkypeChatView {
         scroll.setIcon(ViewHelper.setIcon("scroll.png",100));
         panel.add(scroll);*/
 
-        reply = new JButton("ODPOWIEDZ");
+        reply = new JButton("REPLY");
         reply.setBounds((int)(50+w/2+w+w/16),(int)(dim.getHeight()-250),(int)(w/2+w/4+w/8),100);
         reply.setFont(font.deriveFont(Font.BOLD));
         reply.setBackground(Color.WHITE);
@@ -97,7 +97,7 @@ public class SkypeChatView {
         list.add(reply);
         list2.add("/przyciski/Odpowiedz");
 
-        back = new JButton("WSTECZ");
+        back = new JButton("BACK");
         back.setBounds((int)(50+w/2+w/16),(int)(dim.getHeight()-250),(int)(w/2+w/4+w/8),100);
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
@@ -112,7 +112,7 @@ public class SkypeChatView {
         stopButton.setIcon(ViewHelper.setIcon("stop.png",100));
         list.add(stopButton);
 
-        next = new JButton("NASTĘPNY");
+        next = new JButton("NEXT");
         next.setBounds((int)(50+2*w+w/16),(int)(dim.getHeight()-400),(int)(w/2+w/4+w/8),100);
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
@@ -125,7 +125,7 @@ public class SkypeChatView {
         else next.setEnabled(false);
         panel.add(next);
 
-        prev = new JButton("POPRZEDNI");
+        prev = new JButton("PREVOIUS");
         prev.setBounds((int)(50+w/16),(int)(dim.getHeight()-400),(int)(w/2+w/4+w/8),100);
         prev.setFont(font.deriveFont(Font.BOLD));
         prev.setBackground(Color.WHITE);

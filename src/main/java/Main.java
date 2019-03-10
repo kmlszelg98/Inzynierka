@@ -1,13 +1,20 @@
 import Controller.LoginController;
 import Model.LoginModel;
 import View.LoginView;
+import com.google.api.services.sheets.v4.Sheets;
+import google.GoogleSheetsService;
+import google.SheetsService;
 import org.apache.commons.lang.SystemUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static GoogleSheetsService googleSheetsService;
+
+    public static void main(String[] args) throws IOException, GeneralSecurityException {
 
         String libName = "";
         if (SystemUtils.IS_OS_WINDOWS) {
@@ -17,9 +24,15 @@ public class Main {
         }
         System.load(new File("./src/main/jars/".concat(libName)).getAbsolutePath());
 
+        Imap.Imap imap = new Imap.Imap();
+        imap.initialize();
+
         LoginModel model = new LoginModel();
         LoginView view = new LoginView(model);
         new LoginController(model,view);
+
+
+
 
         /*VoiceThread thread = new VoiceThread(new JPanelOpenCV());
         thread.run();*/

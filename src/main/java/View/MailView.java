@@ -71,7 +71,7 @@ public class MailView {
 
         facebookButton = new JButton("FACEBOOK");
 
-        logoutButton = new JButton("WYLOGUJ");
+        logoutButton = new JButton("LOGOUT");
         logoutButton.setFont(font.deriveFont(Font.BOLD));
         logoutButton.setBackground(Color.WHITE);
         logoutButton.setIcon(ViewHelper.setIcon("logout.png",(int)(x/3)));

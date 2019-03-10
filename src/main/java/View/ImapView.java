@@ -41,7 +41,7 @@ public class ImapView {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         double x = dim.getHeight() / 5;
 
-        inboxButton = new JButton("ODCZYTAJ");
+        inboxButton = new JButton("READ");
         inboxButton.setFont(font.deriveFont(Font.BOLD));
         inboxButton.setBackground(Color.WHITE);
         inboxButton.setIcon(ViewHelper.setIcon("inbox.png",(int)(x/2)));
@@ -49,7 +49,7 @@ public class ImapView {
         buttons[0][0] = inboxButton;
         btn[0][0] = "/przyciski/Odczytaj";
 
-        sendButton = new JButton("UTWORZ");
+        sendButton = new JButton("CREATE");
         sendButton.setFont(font.deriveFont(Font.BOLD));
         sendButton.setBackground(Color.WHITE);
         sendButton.setIcon(ViewHelper.setIcon("send.png",(int)(x/2)));
@@ -57,7 +57,7 @@ public class ImapView {
         buttons[1][0] = sendButton;
         btn[1][0] = "/przyciski/Utwórz";
 
-        sentButton = new JButton("WYSLANE");
+        sentButton = new JButton("SENT");
         sentButton.setFont(font.deriveFont(Font.BOLD));
         sentButton.setBackground(Color.WHITE);
         sentButton.setIcon(ViewHelper.setIcon("sent.png",(int)(x/2)));
@@ -65,7 +65,7 @@ public class ImapView {
         buttons[2][0] = sentButton;
         btn[2][0] = "/przyciski/Wysłane";
 
-        backButton = new JButton("WSTECZ");
+        backButton = new JButton("BACK");
         backButton.setFont(font.deriveFont(Font.BOLD));
         backButton.setBackground(Color.WHITE);
         backButton.setIcon(ViewHelper.setIcon("return.png",(int)(x/2)));

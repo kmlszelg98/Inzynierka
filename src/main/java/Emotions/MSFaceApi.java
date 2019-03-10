@@ -39,8 +39,7 @@ public class MSFaceApi {
         // Request parameters. All of them are optional.
         builder.setParameter("returnFaceId", "true");
         builder.setParameter("returnFaceLandmarks", "false");
-        builder.setParameter("returnFaceAttributes", "age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise");
-
+        builder.setParameter("returnFaceAttributes", "emotion");
         // Prepare the URI for the REST API call.
         URI uri = null;
         try {
@@ -51,8 +50,7 @@ public class MSFaceApi {
         request = new HttpPost(uri);
         // Request headers.
         request.setHeader("Content-Type", "application/octet-stream");
-        request.setHeader("Ocp-Apim-Subscription-Key", "de966db0a82641319a9c0079dfbdf983");
-    }
+        request.setHeader("Ocp-Apim-Subscription-Key", "3bc0c7c4231b43f3998fa8c89502ff36");    }
 
     public void detect() throws IOException {
         File file = new File("./test.jpg");
@@ -70,6 +68,7 @@ public class MSFaceApi {
             String jsonString = EntityUtils.toString(entity).trim();
             if (jsonString.charAt(0) == '[') {
                 JSONArray jsonArray = new JSONArray(jsonString);
+                JSONObject jsonObject = jsonArray.getJSONObject(0).getJSONObject("faceAttributes").getJSONObject("emotion");
                 System.out.println(jsonArray.toString(2));
             }
             else if (jsonString.charAt(0) == '{') {

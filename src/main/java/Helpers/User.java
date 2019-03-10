@@ -10,6 +10,7 @@ public class User {
     private String skypeName;
     private String skypePass;
     private int type;
+    private int photoType;
 
     public User() {
         mailName = "szelagkamil0@gmail.com";
@@ -56,5 +57,13 @@ public class User {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getPhotoType() {
+        return photoType;
+    }
+
+    public void setPhotoType(int photoType) {
+        this.photoType = photoType;
     }
 }

@@ -90,13 +90,13 @@ public class SendWideoView {
         panel.add(bodyLabel);
 
         if(part==0) {
-            bodyLabel.setText("DO : ");
+            bodyLabel.setText("TO : ");
             body = new JTextArea(model.getTo());
         } else if(part==1){
-            bodyLabel.setText("TEMAT : ");
+            bodyLabel.setText("SUBJECT : ");
             body = new JTextArea(model.getSubject());
         } else {
-            bodyLabel.setText("TREŚĆ : ");
+            bodyLabel.setText("BODY : ");
             body = new JTextArea(model.getBody());
         }
         //body.setBounds((int)(dim.getWidth()/3),100,(int)(dim.getWidth()-100),500);
@@ -115,25 +115,25 @@ public class SendWideoView {
         addButtons(s,pos);
 
 
-        accept = new JButton("AKCEPTUJ");
+        accept = new JButton("ACCEPT");
         accept.setFont(font.deriveFont(Font.BOLD));
         accept.setBackground(Color.WHITE);
         accept.setIcon(ViewHelper.setIcon("checked.png",50));
         panel.add(accept);
 
-        cancel = new JButton("ANULUJ");
+        cancel = new JButton("CANCEL");
         cancel.setFont(font.deriveFont(Font.BOLD));
         cancel.setBackground(Color.WHITE);
         cancel.setIcon(ViewHelper.setIcon("cancel.png",50));
         panel.add(cancel);
 
-        more = new JButton("WIECEJ");
+        more = new JButton("MORE");
         more.setFont(font.deriveFont(Font.BOLD));
         more.setBackground(Color.WHITE);
         more.setIcon(ViewHelper.setIcon("more.png",50));
         panel.add(more);
 
-        abc = new JButton("LITERY");
+        abc = new JButton("LETTERS");
         abc.setFont(font.deriveFont(Font.BOLD));
         abc.setBackground(Color.WHITE);
         abc.setIcon(ViewHelper.setIcon("abc.png",50));

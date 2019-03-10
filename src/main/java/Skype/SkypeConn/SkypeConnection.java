@@ -29,20 +29,20 @@ public class SkypeConnection {
     public SkypeConnection(String name, String password) {
         skype = new SkypeBuilder(name,password).withAllResources().build();
 
-        try {
-            skype.login();
-        } catch (NotParticipatingException e){
-            e.printStackTrace();
-        } catch (InvalidCredentialsException e){
-            e.printStackTrace();
-        } catch (ConnectionException e){
-            //e.printStackTrace();
-        }
+//        try {
+//            skype.login();
+//        } catch (NotParticipatingException e){
+//            e.printStackTrace();
+//        } catch (InvalidCredentialsException e){
+//            e.printStackTrace();
+//        } catch (ConnectionException e){
+//            //e.printStackTrace();
+//        }
 
         //skype.getEventDispatcher().registerListener(new SkypeListener(list));
-        try {
-            skype.subscribe();
-        } catch (ConnectionException e) {
+//        try {
+////            skype.subscribe();
+////        } catch (ConnectionException e) {
             //e.printStackTrace();
         }
         /*try {
@@ -56,7 +56,7 @@ public class SkypeConnection {
             e.printStackTrace();
         }*/
 
-    }
+
 
     public void printChats(){
         chatList = new ArrayList<>();

@@ -32,6 +32,8 @@ public class CameraThread extends Thread {
     private int size = 0;
     private int rowSize = 0;
     private boolean isEmotions;
+    private boolean isTest;
+    private int results = -1;
 
     public CameraThread(JPanelOpenCV panel) {
         super();
@@ -41,6 +43,7 @@ public class CameraThread extends Thread {
         this.panel = panel;
         this.size = panel.getLength();
         isEmotions = false;
+        isTest = false;
     }
 
     public static BufferedImage MatToBufferedImage(Mat frame) {
@@ -60,7 +63,16 @@ public class CameraThread extends Thread {
     }
 
     public void setEmotions(boolean emotions) {
+        results = -1;
         isEmotions = emotions;
+    }
+
+    public void setTest(boolean test) {
+        isTest = test;
+    }
+
+    public int getResults() {
+        return results;
     }
 
     @Override
@@ -86,9 +98,15 @@ public class CameraThread extends Thread {
                     File myFile = new File("./test.jpg");
                     myFile.createNewFile();
                     ImageIO.write(image, "jpg", new File("./test.jpg"));
-                    //MSFaceApi faceApi = new MSFaceApi();
-                    //IndicoApi faceApi = new IndicoApi();
-                    //faceApi.detect();
+                    if (LoginController.user.getPhotoType() == 0) {
+                        MSFaceApi faceApi = new MSFaceApi();
+                        faceApi.detect();
+                    } else if (LoginController.user.getPhotoType() == 1) {
+                        IndicoApi faceApi = new IndicoApi();
+                        faceApi.detect();
+                    }
+                    /*TODO*/
+                    results = 2;
                     isEmotions = false;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -100,43 +118,45 @@ public class CameraThread extends Thread {
 
 
 
-            if(!multi) {
-                if (faceDetections.toArray().length > 0) {
-                    blink = false;
-                    start = true;
-                } else if (start) {
-                    if (!blink) {
-                        blink = true;
+            if (!isTest) {
+                if (!multi) {
+                    if (faceDetections.toArray().length > 0) {
+                        blink = false;
+                        start = true;
+                    } else if (start) {
+                        if (!blink) {
+                            blink = true;
 
-                        if (!check) {
-                            check = true;
-                            row = (row > 0 ? row - 1 : (size - 1));
-                            panel.clearColor(row);
-                            rowSize = panel.getRowSize(row);
-                            if (!panel.isMulti()) {
-                                panel.accept(row);
-                                multi = true;
+                            if (!check) {
+                                check = true;
+                                row = (row > 0 ? row - 1 : (size - 1));
+                                panel.clearColor(row);
+                                rowSize = panel.getRowSize(row);
+                                if (!panel.isMulti()) {
+                                    panel.accept(row);
+                                    multi = true;
+                                } else {
+                                    panel.acceptMulti(row);
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                panel.clearColor(row);
                             } else {
-                                panel.acceptMulti(row);
+                                check = false;
+                                cols = (cols > 0 ? cols - 1 : rowSize - 1);
+                                panel.accept(row, cols);
+                                panel.clearColor(row);
+                                if (row == (size - 1)) multi = true;
+                                row = 0;
+                                cols = 0;
                                 try {
-                                    Thread.sleep(2000);
+                                    Thread.sleep(1000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                            }
-                            panel.clearColor(row);
-                        } else {
-                            check = false;
-                            cols = (cols>0? cols-1:rowSize-1);
-                            panel.accept(row,cols);
-                            panel.clearColor(row);
-                            if(row==(size-1)) multi = true;
-                            row = 0;
-                            cols = 0;
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
@@ -144,23 +164,25 @@ public class CameraThread extends Thread {
             }
 
             if(!multi) {
-                if (i % 10 == 0) {
+                if (!isTest) {
+                    if (i % 10 == 0) {
 
-                    if(!check) {
-                        panel.colorRows(row % size);
-                        row = (row == (size - 1) ? 0 : row + 1);
-                    } else {
-                        panel.colorColumns(cols%rowSize,row);
-                        cols = (cols==(rowSize-1)?0:cols+1);
+                        if (!check) {
+                            panel.colorRows(row % size);
+                            row = (row == (size - 1) ? 0 : row + 1);
+                        } else {
+                            panel.colorColumns(cols % rowSize, row);
+                            cols = (cols == (rowSize - 1) ? 0 : cols + 1);
 
-                        //panel.clearColor(row);
+                            //panel.clearColor(row);
+
+                        }
 
                     }
 
-                }
-
-                for (Rect rect : faceDetections.toArray()) {
-                    Core.circle(frame, new Point(rect.x + rect.width / 2, rect.y + rect.height / 2), 10, new Scalar(0, 0, 255));
+                    for (Rect rect : faceDetections.toArray()) {
+                        Core.circle(frame, new Point(rect.x + rect.width / 2, rect.y + rect.height / 2), 10, new Scalar(0, 0, 255));
+                    }
                 }
 
                 BufferedImage image = MatToBufferedImage(frame);

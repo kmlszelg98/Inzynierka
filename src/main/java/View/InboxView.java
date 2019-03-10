@@ -56,7 +56,7 @@ public class InboxView {
         dim = Toolkit.getDefaultToolkit().getScreenSize();
         double x = dim.getHeight()/5;
 
-        from = new JTextArea("OD: "+model.getMessage().getFrom());
+        from = new JTextArea("FROM: "+model.getMessage().getFrom());
         from.setFont(font2.deriveFont(Font.BOLD));
         from.setLineWrap(true);
         from.setEditable(false);
@@ -66,7 +66,7 @@ public class InboxView {
         fromPane.setBorder(border);
         panel.add(fromPane);
 
-        subject = new JTextArea("TEMAT: "+model.getMessage().getSubject());
+        subject = new JTextArea("SUBJECT: "+model.getMessage().getSubject());
         subject.setFont(font2.deriveFont(Font.BOLD));
         subject.setLineWrap(true);
         subject.setEditable(false);
@@ -79,7 +79,7 @@ public class InboxView {
         double x2 = (dim.getHeight()-600)/3;
         double w = dim.getWidth()/2-200;
 
-        read = new JButton("ODCZYTAJ");
+        read = new JButton("READ");
         read.setFont(font.deriveFont(Font.BOLD));
         read.setBackground(Color.WHITE);
         read.setIcon(ViewHelper.setIcon("read.png",(int)(x2/2.5)));
@@ -87,7 +87,7 @@ public class InboxView {
         list.add(read);
         strList.add("/przyciski/Odczytaj");
 
-        back = new JButton("WSTECZ");
+        back = new JButton("BACK");
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",(int)(x2/2)));
@@ -102,7 +102,7 @@ public class InboxView {
         list.add(stopButton);
 
 
-        next = new JButton("NASTEPNY");
+        next = new JButton("NEXT");
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));
@@ -115,7 +115,7 @@ public class InboxView {
         panel.add(next);
 
 
-        prev = new JButton("POPRZEDNI");
+        prev = new JButton("PREVIOUS");
         prev.setFont(font.deriveFont(Font.BOLD));
         prev.setBackground(Color.WHITE);
         prev.setIcon(ViewHelper.setIcon("prev.png",(int)(x2/2)));
@@ -155,7 +155,7 @@ public class InboxView {
 
     public void update(){
         panel.remove(fromPane);
-        from.setText("OD: "+model.getMessage().getFrom());
+        from.setText("FROM: "+model.getMessage().getFrom());
         panel.add(fromPane);
 
         panel.remove(subjectPane);

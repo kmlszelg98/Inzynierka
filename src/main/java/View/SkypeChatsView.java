@@ -83,7 +83,7 @@ public class SkypeChatsView {
         list.add(read);
         list2.add("/przyciski/Chat");
 
-        back = new JButton("WSTECZ");
+        back = new JButton("BACK");
         back.setFont(font.deriveFont(Font.BOLD));
         back.setBackground(Color.WHITE);
         back.setIcon(ViewHelper.setIcon("return.png",(int)(x2/2)));
@@ -97,7 +97,7 @@ public class SkypeChatsView {
         stopButton.setIcon(ViewHelper.setIcon("stop.png",(int)(x/2)));
         list.add(stopButton);
 
-        next = new JButton("NASTEPNY");
+        next = new JButton("NEXT");
         next.setFont(font.deriveFont(Font.BOLD));
         next.setBackground(Color.WHITE);
         next.setIcon(ViewHelper.setIcon("next.png",(int)(x2/2)));
@@ -109,7 +109,7 @@ public class SkypeChatsView {
         else next.setEnabled(false);
         panel.add(next);
 
-        prev = new JButton("POPRZEDNI");
+        prev = new JButton("PREVIOUS");
         prev.setFont(font.deriveFont(Font.BOLD));
         prev.setBackground(Color.WHITE);
         prev.setIcon(ViewHelper.setIcon("prev.png",(int)(x2/2)));

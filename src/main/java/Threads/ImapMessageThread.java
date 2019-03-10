@@ -25,14 +25,14 @@ public class ImapMessageThread extends Thread{
     @Override
     public void run() {
         Imap imap = new Imap();
-        try {
-            //MessageImap messageImap = imap.init(message);
-            this.messageImap = imap.init(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            //MessageImap messageImap = imap.init(message);
+//            //this.messageImap = imap.init(message);
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 }

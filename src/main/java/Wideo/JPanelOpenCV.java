@@ -18,7 +18,11 @@ public class JPanelOpenCV extends JPanel implements MouseListener{
     private JButton[][] buttons;
     private String[][] btn;
     private boolean clicked = false;
+    private boolean test = false;
 
+    public void setTest(boolean test) {
+        this.test = test;
+    }
 
     public void setBtn(String[][] btn) {
         this.btn = btn;
@@ -126,7 +130,11 @@ public class JPanelOpenCV extends JPanel implements MouseListener{
         if(image!=null) {
             int w = image.getWidth();
             int h = image.getHeight();
-            g.drawImage(image, 50, 50, (int) dim.getWidth() / 4, (int) dim.getWidth() / 4 * h / w, this);
+            if (test) {
+                g.drawImage(image, 50, 50, (int) dim.getWidth() - 1000 ,(int)(dim.getWidth() - 1000) * h / w, this);
+            } else {
+                g.drawImage(image, 50, 50, (int) dim.getWidth() / 4, (int) dim.getWidth() / 4 * h / w, this);
+            }
         }
         //g.drawImage(image, 50, 50, this);
     }
